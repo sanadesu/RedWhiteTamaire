@@ -3,6 +3,7 @@
 #include "Engine/Model.h"
 #include "Engine/Camera.h"
 #include"Ball.h"
+#include "Engine/SphereCollider.h"
 
 //コンストラクタ
 Player::Player(GameObject* parent)
@@ -28,6 +29,12 @@ void Player::Initialize()
 
     trans.position_ = XMFLOAT3(0, 0, -3);
     transform_.position_ = XMFLOAT3(0, -0.5, -3);
+
+    //当たり判定
+    SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 3, 0), 1.2f);
+
+    transform_.scale_.y = 0.5f;
+    AddCollider(collision);
 }
 
 //更新
@@ -133,6 +140,12 @@ void Player::Draw()
 //開放
 void Player::Release()
 {
+}
+
+//何かに当たった
+void Player::OnCollision(GameObject* pTarget)
+{
+    //当たったときの処理
 }
 
 //ボールを投げる

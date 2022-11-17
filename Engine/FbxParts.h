@@ -36,7 +36,7 @@ class FbxParts
 		XMFLOAT4 ambient;		//アンビエント
 		XMFLOAT4 speculer;		//スペキュラー（Lambertの場合は0）
 		XMFLOAT4 cameraPosition;//カメラの位置（ハイライトの計算に必要）
-		FLOAT	 shininess;		//ハイライトの強さ（MayaのCosinePower）
+		FLOAT	 shininess;		//ハイライトの強さ（MayaのCosinepower）
 		BOOL	 isTexture;		//テクスチャの有無
 	};
 

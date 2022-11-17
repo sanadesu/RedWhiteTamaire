@@ -14,7 +14,7 @@ PlayScene::PlayScene(GameObject* parent)
 void PlayScene::Initialize()
 {
 	Instantiate<Player>(this);
-	for (int i = 0; i < 40; i++)
+	for (int i = 0; i < 100; i++)
 	{
 		Instantiate<Ball>(this);
 	}

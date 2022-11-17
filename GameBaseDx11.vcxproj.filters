@@ -92,11 +92,6 @@
     <ClCompile Include="ModeScene.cpp" />
     <ClCompile Include="SetumeiScene.cpp" />
     <ClCompile Include="GameoverScene.cpp" />
-    <ClCompile Include="..\Tamaire\TamaireBattle\BallC.cpp" />
-    <ClCompile Include="..\Tamaire\TamaireBattle\BallB.cpp" />
-    <ClCompile Include="..\Tamaire\TamaireBattle\Base.cpp" />
-    <ClCompile Include="..\Tamaire\TamaireBattle\Field.cpp" />
-    <ClCompile Include="..\Tamaire\TamaireBattle\Goal.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Basket.cpp" />
     <ClCompile Include="Ground.cpp" />
@@ -167,11 +162,6 @@
     <ClInclude Include="ModeScene.h" />
     <ClInclude Include="SetumeiScene.h" />
     <ClInclude Include="GameoverScene.h" />
-    <ClInclude Include="..\Tamaire\TamaireBattle\BallB.h" />
-    <ClInclude Include="..\Tamaire\TamaireBattle\Base.h" />
-    <ClInclude Include="..\Tamaire\TamaireBattle\Field.h" />
-    <ClInclude Include="..\Tamaire\TamaireBattle\Goal.h" />
-    <ClInclude Include="BallC.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Basket.h" />
     <ClInclude Include="Ground.h" />

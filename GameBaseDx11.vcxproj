@@ -128,11 +128,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Tamaire\TamaireBattle\BallC.cpp" />
-    <ClCompile Include="..\Tamaire\TamaireBattle\BallB.cpp" />
-    <ClCompile Include="..\Tamaire\TamaireBattle\Base.cpp" />
-    <ClCompile Include="..\Tamaire\TamaireBattle\Field.cpp" />
-    <ClCompile Include="..\Tamaire\TamaireBattle\Goal.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Basket.cpp" />
     <ClCompile Include="ClearScene.cpp" />
@@ -166,12 +161,7 @@
     <ClCompile Include="titleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Tamaire\TamaireBattle\BallB.h" />
-    <ClInclude Include="..\Tamaire\TamaireBattle\Base.h" />
-    <ClInclude Include="..\Tamaire\TamaireBattle\Field.h" />
-    <ClInclude Include="..\Tamaire\TamaireBattle\Goal.h" />
     <ClInclude Include="Ball.h" />
-    <ClInclude Include="BallC.h" />
     <ClInclude Include="Basket.h" />
     <ClInclude Include="ClearScene.h" />
     <ClInclude Include="GameoverScene.h" />

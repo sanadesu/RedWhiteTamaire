@@ -27,29 +27,36 @@ void Ball::Initialize()
         assert(hModel_[i] >= 0);
     }
 
-    transform_.position_ = XMFLOAT3(3, 0.2, 3);
+    transform_.position_ = XMFLOAT3(3, 0, 3);
 
-    //for (int i = 0; i < 0; i++)
+    ////for (int i = 0; i < 0; i++)
+    //{
+    //    transform_.position_.x = (float)(((float)(rand() % 4000) - 2000) / 100);
+    //    transform_.position_.z = (float)(((float)(rand() % 4000) - 2000) / 100);
+    //    /*if (radius > 360 || radius < 15)
+    //    {
+    //        transform_.position_.x = (float)(((float)(rand() % 4000) - 2000) / 100);
+    //        transform_.position_.z = (float)(((float)(rand() % 4000) - 2000) / 100);
+    //        i--;
+    //    }*/
+    //}
+
+    do
     {
         transform_.position_.x = (float)(((float)(rand() % 4000) - 2000) / 100);
         transform_.position_.z = (float)(((float)(rand() % 4000) - 2000) / 100);
-        /*if (radius > 360 || radius < 15)
-        {
-            transform_.position_.x = (float)(((float)(rand() % 4000) - 2000) / 100);
-            transform_.position_.z = (float)(((float)(rand() % 4000) - 2000) / 100);
-            i--;
-        }*/
-    }
-
+        radius = (transform_.position_.x * transform_.position_.x) + (transform_.position_.z * transform_.position_.z);
+    } while (radius > 360 || radius < 15);
+  
     //当たり判定
     SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 0, 0), 0.18f);
     AddCollider(collision);
 
    
     radius = 0;
-    height = 1.0f;
-    powerX = 0.0f;
-    powerY = 0.0f;
+    height = 1;
+    powerX = 0;
+    powerY = 0;
     gravity = 0.05;
     playerAngleY = 0;
     throwBall = false;
@@ -77,7 +84,7 @@ void Ball::Update()
         }
         else if(Input::IsKeyUp(DIK_SPACE))
         {
-            powerY -= playerAngleY;//プレイヤーの角度
+            //powerY -= playerAngleY;//プレイヤーの角度
         }
         else
         {
@@ -92,7 +99,7 @@ void Ball::Update()
             // バウンドの判定
             if (transform_.position_.y <= 0.0f)
             {  // ボールが画面下に当たったら
-                transform_.position_.y = 0.15;
+                transform_.position_.y = 0.0;
                 powerY = -powerY * 0.6;  // y軸のスピードを反転して玉入れっぽくあまり跳ねなくする
                 height = powerY; //高さ保存
             }
@@ -105,6 +112,13 @@ void Ball::Update()
             powerY = 0;
             throwBall = false;
         }
+    }
+
+    //玉を持つ処理
+    //真ん中の照準から範囲決めてなんか飛ばしてクリック
+    if (Input::IsMouseButtonDown(0))
+    {
+
     }
 
     //デバッグ用
@@ -176,5 +190,5 @@ void Ball::Release()
 //当たり判定
 void Ball::OnCollision(GameObject* pTarget)
 {
-    powerX *= 0.98;
+    //powerX *= 0.98;
 }
