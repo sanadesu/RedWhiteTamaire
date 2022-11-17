@@ -31,9 +31,9 @@ void Player::Initialize()
     transform_.position_ = XMFLOAT3(0, -0.5, -3);
 
     //“–‚½‚è”»’è
-    SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 3, 0), 1.2f);
+    SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 2, 0), 1.2f);
 
-    transform_.scale_.y = 0.5f;
+    //transform_.scale_.y = 0.5f;
     AddCollider(collision);
 }
 
