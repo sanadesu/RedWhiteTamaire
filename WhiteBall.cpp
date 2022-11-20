@@ -36,13 +36,10 @@ void WhiteBall::Initialize()
     AddCollider(collision);
 
     radius = 0;
-    whiteCount = 0;
     height = 1;
-    powerX = 0;
+    powerZ = 0;
     powerY = 0;
-    playerAngleY = 0;
     throwBall = false;
-    down = false;
     rightHaving = false;
     leftHaving = false;
 }
@@ -59,7 +56,7 @@ void WhiteBall::Update()
         {
             if (rightHaving == true)
             {
-                powerX += 0.01;
+                powerZ += 0.01;
                 //あとで向いてる角度にする
                 powerY -= 0.01;
                 throwBall = true;
@@ -67,7 +64,7 @@ void WhiteBall::Update()
         }
         else if (Input::IsKeyUp(DIK_SPACE))
         {
-            //powerY -= playerAngleY;//プレイヤーの角度
+            //ボールを2個もってたら
             if (pPlayer->GetHand().second == true)
             {
                 pPlayer->SetHand(false, true);
@@ -79,7 +76,6 @@ void WhiteBall::Update()
                 pPlayer->SetHand(false, false);
                
             }
-            
         }
         else
         {
@@ -89,30 +85,30 @@ void WhiteBall::Update()
             powerY += GRAVITY;
 
             // スピードの演算
-            transform_.position_.z += powerX;
+            transform_.position_.z += powerZ;
             transform_.position_.y -= powerY;
-            powerX *= 0.97;
+            powerZ *= 0.97;
 
             // バウンドの判定
             if (transform_.position_.y <= 0.0f)
-            {  // ボールが画面下に当たったら
+            {  // ボールが下に当たったら
                 transform_.position_.y = 0.0;
                 powerY = -powerY * BOUND;  // y軸のスピードを反転して玉入れっぽくあまり跳ねなくする
                 height = powerY; //高さ保存
-                powerX *= 0.98;
+                powerZ *= 0.98;
             }
         }
 
         //高さ＆移動が終わる
-        if (powerX <= 0.001 && abs(height) <= 0.021)
+        if (powerZ <= 0.001 && abs(height) <= 0.021)
         {
-            powerX = 0;
+            powerZ = 0;
             powerY = 0;
             throwBall = false;
         }
-        
     }
 
+    //右手で持ってたら
     if (rightHaving == true)
     {
         transform_.position_ = pPlayer->GetPosition();
@@ -120,6 +116,7 @@ void WhiteBall::Update()
         transform_.position_.y += 2.5;
     }
 
+    //左手で持ってたら
     if (leftHaving == true)
     {
         transform_.position_ = pPlayer->GetPosition();
@@ -127,12 +124,12 @@ void WhiteBall::Update()
         transform_.position_.y += 2.5;
     }
 
+    //ボールを右手に持ちかえる
     if (pPlayer->GetHand().first == false && leftHaving == true)
     {
         rightHaving = true;
         leftHaving = false;
         pPlayer->SetHand(true, false);
-
     }
 
     /*if (pPlayer->GetHand().first == false && rightHaving == true)

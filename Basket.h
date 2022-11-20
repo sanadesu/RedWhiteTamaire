@@ -5,8 +5,8 @@
 class Basket : public GameObject
 {
     int hModel_;    //モデル番号
-    int whiteSum;
-    int redSum;
+    int whiteSum;   //白玉の得点
+    int redSum;     //赤玉の得点
 public:
     //コンストラクタ
     Basket(GameObject* parent);

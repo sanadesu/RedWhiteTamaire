@@ -9,8 +9,8 @@ class Player : public GameObject
     const float MOVE = 0.1f;//移動距離
     const float Z_ = 10.0f; //Z座標
     float y_;               //Y座標
-    bool rightHand;
-    bool leftHand;
+    bool rightHand;         //右手
+    bool leftHand;          //左手
     //Transform trans;
 public:
     //コンストラクタ

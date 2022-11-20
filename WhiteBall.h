@@ -15,16 +15,13 @@ class WhiteBall : public GameObject
     const float GRAVITY = 0.05f;
     const float BOUND = 0.6f;
 
-    int radius;
-    int whiteCount;
-    float height;
-    float powerX;
-    float powerY;
-    float playerAngleY;
-    bool throwBall;
-    bool down;
-    bool rightHaving;
-    bool leftHaving;
+    int radius;         //円の半径の2乗
+    float height;       //バウンドの高さ
+    float powerZ;       //投げる距離
+    float powerY;       //投げる高さ
+    bool throwBall;     //ボールを投げている間
+    bool rightHaving;   //右手
+    bool leftHaving;    //左手
 
     Player* pPlayer = (Player*)FindObject("Player");
     Basket* pBasket = (Basket*)FindObject("Basket");
