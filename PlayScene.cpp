@@ -2,7 +2,7 @@
 #include"Player.h"
 #include"Ground.h"
 #include "Basket.h"
-#include "Ball.h"
+#include "WhiteBall.h"
 
 //コンストラクタ
 PlayScene::PlayScene(GameObject* parent)
@@ -14,12 +14,13 @@ PlayScene::PlayScene(GameObject* parent)
 void PlayScene::Initialize()
 {
 	Instantiate<Player>(this);
+	Instantiate<Basket>(this);
 	for (int i = 0; i < 100; i++)
 	{
-		Instantiate<Ball>(this);
+		Instantiate<WhiteBall>(this);
 	}
 	Instantiate<Ground>(this);
-	Instantiate<Basket>(this);
+	
 }
 
 //更新

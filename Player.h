@@ -6,10 +6,12 @@ class Player : public GameObject
 {
     int hModel_;    //モデル番号
 
-    float y_;
-    const float Z_;
-    const float MOVE;
-    Transform trans;
+    const float MOVE = 0.1f;//移動距離
+    const float Z_ = 10.0f; //Z座標
+    float y_;               //Y座標
+    bool rightHand;
+    bool leftHand;
+    //Transform trans;
 public:
     //コンストラクタ
     Player(GameObject* parent);
@@ -33,9 +35,18 @@ public:
    //引数：pTarget 当たった相手
     void OnCollision(GameObject* pTarget) override;
 
-    //ボールを投げる
-    void BallThrow();
-
     //角度取得
     float GetAngle();
+
+    //右手でボールを持つ
+    void SetHand(bool rightHand_, bool leftHand_);
+
+    //右手でボールを持っているか
+    std::pair<bool,bool> GetHand();
+
+    ////左手でボールを持つ
+    //void SetLeftHave(bool rightHand_,bool leftHand_);
+
+    ////左手でボールを持っているか
+    //bool GetLeftHave();
 };

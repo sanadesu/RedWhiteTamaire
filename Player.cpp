@@ -8,9 +8,6 @@
 //コンストラクタ
 Player::Player(GameObject* parent)
     :GameObject(parent, "Player"),
-    y_(6.0), //Y座標
-    Z_(10.0),//Z座標
-    MOVE(0.1), //移動速度
     hModel_(-1)
 {
 
@@ -19,6 +16,7 @@ Player::Player(GameObject* parent)
 //デストラクタ
 Player::~Player()
 {
+
 }
 
 //初期化
@@ -27,14 +25,18 @@ void Player::Initialize()
     hModel_ = Model::Load("Player.fbx");
     assert(hModel_ >= 0);
 
-    trans.position_ = XMFLOAT3(0, 0, -3);
+    //trans.position_ = XMFLOAT3(0, 0, -3);
     transform_.position_ = XMFLOAT3(0, -0.5, -3);
 
     //当たり判定
-    SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 2, 0), 1.2f);
+    SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 1, 0), 1.2f);
 
     //transform_.scale_.y = 0.5f;
     AddCollider(collision);
+
+    y_ = 10.0f; //Y座標
+    rightHand = false;
+    leftHand = false;
 }
 
 //更新
@@ -64,6 +66,7 @@ void Player::Update()
     //W押したら前進
     if (Input::IsKey(DIK_W))
     {
+        //transform_.position_.z += 0.5;
         XMFLOAT3 move = { 0,0,MOVE }; //移動量
         XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
         XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));   //Y軸でｙ°回転させる行列
@@ -128,6 +131,12 @@ void Player::Update()
 
     Camera::SetPosition(camPos);
     Camera::SetTarget(transform_.position_);
+
+    //デバッグ用
+    if (Input::IsKeyDown(DIK_B))
+    {
+        int a = 0;
+    }
 }
 
 //描画
@@ -148,14 +157,22 @@ void Player::OnCollision(GameObject* pTarget)
     //当たったときの処理
 }
 
-//ボールを投げる
-void Player::BallThrow()
-{
-
-}
-
+//角度取得
 float Player::GetAngle()
 {
-    return y_;
+    return 0;
+}
+
+//ボールを持つ
+void Player::SetHand(bool rightHand_,bool leftHand_)
+{
+    rightHand = rightHand_;
+    leftHand = leftHand_;
+}
+
+//ボールを持っているか
+std::pair<bool, bool> Player::GetHand()
+{
+    return std::make_pair(rightHand, leftHand);
 }
 

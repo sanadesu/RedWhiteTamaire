@@ -95,6 +95,8 @@
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Basket.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="RedBall.cpp" />
+    <ClCompile Include="WhiteBall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -165,6 +167,8 @@
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Basket.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="RedBall.h" />
+    <ClInclude Include="WhiteBall.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

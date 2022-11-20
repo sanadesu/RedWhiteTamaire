@@ -156,9 +156,11 @@
     <ClCompile Include="Engine\Texture.cpp" />
     <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="RedBall.cpp" />
     <ClCompile Include="SetumeiScene.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="titleScene.cpp" />
+    <ClCompile Include="WhiteBall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
@@ -188,9 +190,11 @@
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="RedBall.h" />
     <ClInclude Include="SetumeiScene.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="titleScene.h" />
+    <ClInclude Include="WhiteBall.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Debug3D.hlsl">

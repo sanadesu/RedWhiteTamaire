@@ -5,7 +5,8 @@
 class Basket : public GameObject
 {
     int hModel_;    //モデル番号
-
+    int whiteSum;
+    int redSum;
 public:
     //コンストラクタ
     Basket(GameObject* parent);
@@ -25,4 +26,13 @@ public:
     //開放
     void Release() override;
 
+    //何かに当たった
+   //引数：pTarget 当たった相手
+    void OnCollision(GameObject* pTarget) override;
+
+    //白いボールの合計
+    void WhiteCount();
+
+    //赤いボールの合計
+    void RedCount();
 };
