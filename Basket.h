@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/GameObject.h"
+#include "Engine/Text.h"
 
 //◆◆◆を管理するクラス
 class Basket : public GameObject
@@ -7,6 +8,7 @@ class Basket : public GameObject
     int hModel_;    //モデル番号
     int whiteSum;   //白玉の得点
     int redSum;     //赤玉の得点
+    Text* pText;
 public:
     //コンストラクタ
     Basket(GameObject* parent);

@@ -14,6 +14,7 @@ class WhiteBall : public GameObject
 
     const float GRAVITY = 0.05f;
     const float BOUND = 0.6f;
+    const float BALLSIZE = 0.18f;
 
     int radius;         //‰~‚Ì”¼Œa‚Ì2æ
     float height;       //ƒoƒEƒ“ƒh‚Ì‚‚³

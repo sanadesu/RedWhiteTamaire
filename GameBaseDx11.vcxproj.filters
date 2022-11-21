@@ -97,6 +97,10 @@
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="RedBall.cpp" />
     <ClCompile Include="WhiteBall.cpp" />
+    <ClCompile Include="Engine\Text.cpp">
+      <Filter>01Engine\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="BasePlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -169,6 +173,10 @@
     <ClInclude Include="Ground.h" />
     <ClInclude Include="RedBall.h" />
     <ClInclude Include="WhiteBall.h" />
+    <ClInclude Include="Engine\Text.h">
+      <Filter>01Engine\ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="BasePlayer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

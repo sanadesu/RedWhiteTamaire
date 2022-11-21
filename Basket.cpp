@@ -7,7 +7,7 @@
 
 //コンストラクタ
 Basket::Basket(GameObject* parent)
-    :GameObject(parent, "Basket"),hModel_(-1)
+    :GameObject(parent, "Basket"),hModel_(-1), pText(nullptr)
 {
 
 }
@@ -15,6 +15,7 @@ Basket::Basket(GameObject* parent)
 //デストラクタ
 Basket::~Basket()
 {
+
 }
 
 //初期化
@@ -29,6 +30,9 @@ void Basket::Initialize()
     //当たり判定
     SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 5, 0), 0.8f);
     AddCollider(collision);
+
+    pText = new Text;
+    pText->Initialize();
 
     whiteSum = 0;
     redSum = 0;
@@ -49,6 +53,8 @@ void Basket::Draw()
 {
     Model::SetTransform(hModel_, transform_);
     Model::Draw(hModel_);
+    pText->Draw(30, 30, (whiteSum));
+    pText->Draw(30, 60, (redSum));
 }
 
 //開放

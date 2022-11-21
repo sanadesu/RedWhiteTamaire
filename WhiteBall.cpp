@@ -26,13 +26,13 @@ void WhiteBall::Initialize()
 
     do
     {
-        transform_.position_.x = (float)(((float)(rand() % 4000) - 2000) / 100);
-        transform_.position_.z = (float)(((float)(rand() % 4000) - 2000) / 100);
+        transform_.position_.x = (float)(((float)(rand() % 3600) - 1800) / 100);
+        transform_.position_.z = (float)(((float)(rand() % 3600) - 1800) / 100);
         radius = (transform_.position_.x * transform_.position_.x) + (transform_.position_.z * transform_.position_.z);
     } while (radius > 360 || radius < 15);
 
     //当たり判定
-    SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 0, 0), 0.18f);
+    SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 0, 0), BALLSIZE);
     AddCollider(collision);
 
     radius = 0;
@@ -50,7 +50,6 @@ void WhiteBall::Update()
     //スペースキーを押したら
     if ((Input::IsKeyDown(DIK_SPACE) || throwBall == true))
     {
-        
         //スペースを押してるとき
         if (Input::IsKey(DIK_SPACE) && (rightHaving == true || leftHaving == true))
         {
@@ -68,13 +67,10 @@ void WhiteBall::Update()
             if (pPlayer->GetHand().second == true)
             {
                 pPlayer->SetHand(false, true);
-                //leftHaving = false;
-                //rightHaving = true;
             }
             else
             {
                 pPlayer->SetHand(false, false);
-               
             }
         }
         else
@@ -87,7 +83,7 @@ void WhiteBall::Update()
             // スピードの演算
             transform_.position_.z += powerZ;
             transform_.position_.y -= powerY;
-            powerZ *= 0.97;
+            powerZ *= 0.97;//抵抗
 
             // バウンドの判定
             if (transform_.position_.y <= 0.0f)
@@ -95,7 +91,7 @@ void WhiteBall::Update()
                 transform_.position_.y = 0.0;
                 powerY = -powerY * BOUND;  // y軸のスピードを反転して玉入れっぽくあまり跳ねなくする
                 height = powerY; //高さ保存
-                powerZ *= 0.98;
+                powerZ *= 0.97;//抵抗
             }
         }
 
@@ -132,13 +128,6 @@ void WhiteBall::Update()
         pPlayer->SetHand(true, false);
     }
 
-    /*if (pPlayer->GetHand().first == false && rightHaving == true)
-    {
-        rightHaving = false;
-        leftHaving = false;
-        pPlayer->SetHand(false, false);
-    }*/
-
     //玉を持つ処理
     //真ん中の照準から範囲決めてなんか飛ばしてクリック
     if (Input::IsMouseButtonDown(0))
@@ -149,14 +138,20 @@ void WhiteBall::Update()
     //デバッグ用
     if (Input::IsKey(DIK_B))
     {
-        int a = 0;
+       int a = 0;
     }
 
     //左シフト押したら元に戻す、後で消す
     if (Input::IsKeyDown(DIK_LSHIFT))
     {
-        throwBall = false;
-        transform_.position_ = XMFLOAT3(3, 3, 3);
+        pPlayer->SetHand(false, false);
+    }
+
+    //円の範囲外なら消える
+    radius = (transform_.position_.x * transform_.position_.x) + (transform_.position_.z * transform_.position_.z);
+    if (radius > 400)
+    {
+        KillMe();
     }
 }
 

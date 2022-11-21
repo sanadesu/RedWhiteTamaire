@@ -9,6 +9,7 @@ class Player : public GameObject
     const float MOVE = 0.1f;//ˆÚ“®‹——£
     const float Z_ = 10.0f; //ZÀ•W
     float y_;               //YÀ•W
+    float moveLimit;        //ˆÚ“®”ÍˆÍ
     bool rightHand;         //‰Eè
     bool leftHand;          //¶è
     //Transform trans;
