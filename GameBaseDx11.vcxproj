@@ -135,6 +135,7 @@
     <ClCompile Include="Engine\Text.cpp" />
     <ClCompile Include="GameoverScene.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="Log.cpp" />
     <ClCompile Include="memo.cpp" />
     <ClCompile Include="ModeScene.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="Engine\Text.h" />
     <ClInclude Include="GameoverScene.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="Log.h" />
     <ClInclude Include="ModeScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Engine\Audio.h" />

@@ -51,7 +51,7 @@ void WhiteBall::Update()
     if ((Input::IsKeyDown(DIK_SPACE) || throwBall == true))
     {
         //スペースを押してるとき
-        if (Input::IsKey(DIK_SPACE) && (rightHaving == true || leftHaving == true))
+        if (Input::IsKey(DIK_SPACE)&& (rightHaving == true || leftHaving == true))
         {
             if (rightHaving == true)
             {
@@ -72,6 +72,7 @@ void WhiteBall::Update()
             {
                 pPlayer->SetHand(false, false);
             }
+            //powerY + Playerの向いてる角度
         }
         else
         {
@@ -93,14 +94,14 @@ void WhiteBall::Update()
                 height = powerY; //高さ保存
                 powerZ *= 0.97;//抵抗
             }
-        }
-
-        //高さ＆移動が終わる
-        if (powerZ <= 0.001 && abs(height) <= 0.021)
-        {
-            powerZ = 0;
-            powerY = 0;
-            throwBall = false;
+            
+            //高さ＆移動が終わる
+            if (powerZ <= 0.001)
+            {
+                powerZ = 0;
+                powerY = 0;
+                throwBall = false;
+            }
         }
     }
 
@@ -151,6 +152,7 @@ void WhiteBall::Update()
     radius = (transform_.position_.x * transform_.position_.x) + (transform_.position_.z * transform_.position_.z);
     if (radius > 400)
     {
+        fieldWhiteBall--;
         KillMe();
     }
 }
@@ -175,12 +177,13 @@ void WhiteBall::OnCollision(GameObject* pTarget)
     {
         //ゴールに入ったら得点＋消える
         pBasket->WhiteCount();
+        fieldWhiteBall--;
         KillMe();
         
         //ゴールじゃなかったら落ちる
 
     }
-    else if (pTarget->GetObjectName() == "Player" && pPlayer->GetHand().second == false)
+    else if (pTarget->GetObjectName() == "Player" && pPlayer->GetHand().second == false && throwBall == false)
     {
         //ボールを持っていないとき
         if (pPlayer->GetHand().first == false)
@@ -197,3 +200,4 @@ void WhiteBall::OnCollision(GameObject* pTarget)
         }
     }
 }
+

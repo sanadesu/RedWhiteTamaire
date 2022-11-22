@@ -17,6 +17,7 @@ class WhiteBall : public GameObject
     const float BALLSIZE = 0.18f;
 
     int radius;         //円の半径の2乗
+    int fieldWhiteBall;      //フィールドに落ちてるボールの合計
     float height;       //バウンドの高さ
     float powerZ;       //投げる距離
     float powerY;       //投げる高さ
@@ -26,6 +27,7 @@ class WhiteBall : public GameObject
 
     Player* pPlayer = (Player*)FindObject("Player");
     Basket* pBasket = (Basket*)FindObject("Basket");
+    GameObject* pWhiteBall = FindObject("WhiteBall");
 public:
     //コンストラクタ
     WhiteBall(GameObject* parent);
@@ -48,4 +50,5 @@ public:
     //何かに当たった
     //引数：pTarget 当たった相手
     void OnCollision(GameObject* pTarget) override;
+
 };

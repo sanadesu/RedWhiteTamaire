@@ -71,6 +71,7 @@ void Basket::OnCollision(GameObject* pTarget)
 //白いボールの合計
 void Basket::WhiteCount()
 {
+    //ベクター計算して上から当たったのだけ得点
     whiteSum++;
 }
 

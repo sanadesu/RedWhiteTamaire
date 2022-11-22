@@ -20,13 +20,11 @@ void PlayScene::Initialize()
 		Instantiate<WhiteBall>(this);
 	}
 	Instantiate<Ground>(this);
-	
 }
 
 //XV
 void PlayScene::Update()
 {
-	//GameObject* Title = FindObject("SceneManager");
 }
 
 //•`‰æ

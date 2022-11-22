@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/GameObject.h"
+#include "WhiteBall.h"
 
 //■■シーンを管理するクラス
 class PlayScene : public GameObject
@@ -20,4 +21,5 @@ public:
 
 	//開放
 	void Release() override;
+
 };
