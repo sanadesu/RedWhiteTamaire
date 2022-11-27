@@ -1,5 +1,6 @@
 #include "PlayScene.h"
 #include"Player1.h"
+#include"Player2.h"
 #include"Ground.h"
 #include "Basket.h"
 #include "WhiteBall.h"
@@ -18,6 +19,7 @@ PlayScene::PlayScene(GameObject* parent)
 void PlayScene::Initialize()
 {
 	Instantiate<Player1>(this);
+	Instantiate<Player2>(this);
 	Instantiate<Basket>(this);
 	for (int i = 0; i < ALL_BALL; i++)
 	{

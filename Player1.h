@@ -17,7 +17,7 @@ class Player1 : public GameObject
     float moveLimit;        //移動範囲
     bool rightHand;         //右手
     bool leftHand;          //左手
-    //Transform trans;
+    bool damage;            //攻撃を受けたか
 public:
     //コンストラクタ
     Player1(GameObject* parent);
@@ -44,15 +44,15 @@ public:
     //角度取得
     float GetAngle();
 
-    //右手でボールを持つ
+    //ボールを持つ
     void SetHand(bool rightHand_, bool leftHand_);
 
-    //右手でボールを持っているか
+    //ボールを持っているか
     std::pair<bool,bool> GetHand();
 
-    ////左手でボールを持つ
-    //void SetLeftHave(bool rightHand_,bool leftHand_);
+    //攻撃を受ける
+    void SetDamage(bool damage_);
 
-    ////左手でボールを持っているか
-    //bool GetLeftHave();
+    //攻撃治る
+    bool GetDamage();
 };

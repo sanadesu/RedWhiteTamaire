@@ -36,6 +36,7 @@ void Player1::Initialize()
     moveLimit = 0.0f;
     rightHand = false;
     leftHand = false;
+    damage = false;
 }
 
 //更新
@@ -107,7 +108,7 @@ void Player1::Update()
 
             XMStoreFloat3(&transform_.position_, vPos);
         }
-        //S押したら後退
+        //A押したら
         if (Input::IsKey(DIK_A))
         {
             XMFLOAT3 move = { -PLAYER_MOVE,0,0 }; //
@@ -121,6 +122,7 @@ void Player1::Update()
             XMStoreFloat3(&transform_.position_, vPos); 
         }
     }
+
     //カメラ移動
     //右押したら右回転
     if (Input::IsKey(DIK_RIGHT))
@@ -199,5 +201,15 @@ void Player1::SetHand(bool rightHand_,bool leftHand_)
 std::pair<bool, bool> Player1::GetHand()
 {
     return std::make_pair(rightHand, leftHand);
+}
+
+void Player1::SetDamage(bool damage_)
+{
+    damage = damage_;
+}
+
+bool Player1::GetDamage()
+{
+    return damage;
 }
 

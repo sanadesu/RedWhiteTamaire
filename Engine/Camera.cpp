@@ -12,7 +12,7 @@ void Camera::Initialize()
 	_position = XMFLOAT3(0, 3, -10);	//カメラの位置
 	_target = XMFLOAT3( 0, 0, 0);	//カメラの焦点
 
-	//プロジェクション行列
+	//プロジェクション行列//★
 	_proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, (FLOAT)Direct3D::screenWidth_ / (FLOAT)Direct3D::screenHeight_, 0.1f, 1000.0f);
 }
 

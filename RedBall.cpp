@@ -18,21 +18,25 @@ RedBall::~RedBall()
 //初期化
 void RedBall::Initialize()
 {
-    //const int WhiteConstParam::DIAMETER = 3800;
+    //const int RedConstParam::DIAMETER = 3800;
 
+    key = 0;
     radius = 0;
-    height = 1;
-    powerZ = 0;
-    powerY = 0;
-    throwBall = false;
-    rightHaving = false;
-    leftHaving = false;
+
+    for (int i = 0; i < Max; i++)
+    {
+        height[i] = 1;
+        powerZ[i] = 0;
+        powerY[i] = 0;
+        ballDrop[i] = 0;
+        throwBall[i] = false;
+        rightHaving[i] = false;
+        leftHaving[i] = false;
+    }
 
     //モデルデータのロード
     hModel_ = Model::Load("RedBall.fbx");
     assert(hModel_ >= 0);
-
-    transform_.position_ = XMFLOAT3(0, 0, 0);
 
     do
     {
@@ -50,86 +54,197 @@ void RedBall::Initialize()
 //更新
 void RedBall::Update()
 {
-    //スペースキーを押したら
-    if ((Input::IsKeyDown(DIK_SPACE) || throwBall == true))
+    //後でキーを変えられるようにしてfor文
+
+
+    for (int i = 0; i < Max; i++)
     {
-        //スペースを押してるとき
-        if (Input::IsKey(DIK_SPACE) && (rightHaving == true || leftHaving == true))
+        if (i == First)
         {
-            if (rightHaving == true)
-            {
-                powerZ += POWER;
-                //あとで向いてる角度にする
-                powerY -= POWER;
-                throwBall = true;
-            }
+            key = DIK_SPACE;
         }
-        else if (Input::IsKeyUp(DIK_SPACE))
+        else if (i == Second)
         {
-            //ボールを2個もってたら
-            if (pPlayer1->GetHand().second == true)
-            {
-                pPlayer1->SetHand(false, true);
-            }
-            else
-            {
-                pPlayer1->SetHand(false, false);
-            }
-            //powerY + Playerの向いてる角度
+            key = DIK_RETURN;
         }
         else
         {
-            rightHaving = false;
-            leftHaving = false;
-            // 加速度の演算
-            powerY += GRAVITY;
+            key = 0;
+        }
 
-            // スピードの演算
-            transform_.position_.z += powerZ;
-            transform_.position_.y -= powerY;
-            powerZ *= RESISTANCE;//抵抗
 
-            // バウンドの判定
-            if (transform_.position_.y <= 0.0f)
-            {  // ボールが下に当たったら
-                transform_.position_.y = 0.0;
-                powerY = -powerY * BOUND;  // y軸のスピードを反転して玉入れっぽくあまり跳ねなくする
-                height = powerY; //高さ保存
-                powerZ *= RESISTANCE;//抵抗
-            }
-
-            //移動が終わる
-            if (powerZ <= END_MOVE)
+        //スペースキーを押したら
+        if ((Input::IsKeyDown(key) || throwBall[i] == true))
+        {
+            //スペースを押してるとき
+            if (Input::IsKey(key) && (rightHaving[i] == true || leftHaving[i] == true))
             {
-                powerZ = 0;
-                powerY = 0;
-                throwBall = false;
+                if (rightHaving[i] == true)
+                {
+                    powerZ[i] += POWER;
+                    //あとで向いてる角度にする
+                    powerY[i] -= POWER;
+                    throwBall[i] = true;
+                }
+            }
+            else if (Input::IsKeyUp(key))
+            {
+                if (i == First)
+                {
+                    //ボールを2個もってたら
+                    if (pPlayer1->GetHand().second == true)
+                    {
+                        pPlayer1->SetHand(false, true);
+                    }
+                    else
+                    {
+                        pPlayer1->SetHand(false, false);
+                    }
+                }
+                else if (i == Second)
+                {
+                    //ボールを2個もってたら
+                    if (pPlayer2->GetHand().second == true)
+                    {
+                        pPlayer2->SetHand(false, true);
+                    }
+                    else
+                    {
+                        pPlayer2->SetHand(false, false);
+                    }
+                }
+
+                //powerY + Playerの向いてる角度
+            }
+            else
+            {
+                rightHaving[i] = false;
+                leftHaving[i] = false;
+                // 加速度の演算
+                powerY[i] += GRAVITY;
+
+                // スピードの演算
+                transform_.position_.z += powerZ[i];
+                transform_.position_.y -= powerY[i];
+                powerZ[i] *= RESISTANCE;//抵抗
+
+                // バウンドの判定
+                if (transform_.position_.y <= 0.0f)
+                {  // ボールが下に当たったら
+                    transform_.position_.y = 0.0;
+                    powerY[i] = -powerY[i] * BOUND;  // y軸のスピードを反転して玉入れっぽくあまり跳ねなくする
+                    height[i] = powerY[i]; //高さ保存
+                    powerZ[i] *= RESISTANCE;//抵抗
+                }
+
+                //移動が終わる
+                if (powerZ[i] <= END_MOVE)
+                {
+                    powerZ[i] = 0;
+                    powerY[i] = 0;
+                    throwBall[i] = false;
+                }
             }
         }
     }
 
     //右手で持ってたら
-    if (rightHaving == true)
+    if (rightHaving[First] == true)
     {
         transform_.position_ = pPlayer1->GetPosition();
         transform_.position_.x += RIGHT_HAND_LENGTH;
         transform_.position_.y += HAND_HEIGHT;
     }
+    else if (rightHaving[Second] == true)
+    {
+        transform_.position_ = pPlayer2->GetPosition();
+        transform_.position_.x += RIGHT_HAND_LENGTH;
+        transform_.position_.y += HAND_HEIGHT;
+    }
 
     //左手で持ってたら
-    if (leftHaving == true)
+    if (leftHaving[First] == true)
     {
         transform_.position_ = pPlayer1->GetPosition();
         transform_.position_.x += LEFT_HAND_LENGTH;
         transform_.position_.y += HAND_HEIGHT;
     }
-
-    //ボールを右手に持ちかえる
-    if (pPlayer1->GetHand().first == false && leftHaving == true)
+    else if (leftHaving[Second] == true)
     {
-        rightHaving = true;
-        leftHaving = false;
+        transform_.position_ = pPlayer2->GetPosition();
+        transform_.position_.x += LEFT_HAND_LENGTH;
+        transform_.position_.y += HAND_HEIGHT;
+    }
+    //ボールを右手に持ちかえる
+    if (pPlayer1->GetHand().first == false && leftHaving[First] == true)
+    {
+        rightHaving[First] = true;
+        leftHaving[First] = false;
         pPlayer1->SetHand(true, false);
+    }
+    else if (pPlayer2->GetHand().first == false && leftHaving[Second] == true)
+    {
+        rightHaving[Second] = true;
+        leftHaving[Second] = false;
+        pPlayer2->SetHand(true, false);
+    }
+
+    if (pPlayer1->GetDamage() == true)
+    {
+
+        if (leftHaving[First] == true)
+        {
+            KillMe();
+            leftHaving[First] = false;
+        }
+        else if (rightHaving[First] == true && leftHaving[First] == false)
+        {
+            KillMe();
+            rightHaving[First] = false;
+
+        }
+
+        pPlayer1->SetHand(false, false);
+
+        ballDrop[First]++;
+        if (ballDrop[First] < DROP_TIME)
+        {
+            ballDrop[First]++;
+        }
+        else
+        {
+            pPlayer1->SetDamage(false);
+            ballDrop[First] = 0;
+        }
+    }
+
+    if (pPlayer2->GetDamage() == true)
+    {
+
+        if (leftHaving[Second] == true)
+        {
+            KillMe();
+            leftHaving[Second] = false;
+        }
+        else if (rightHaving[Second] == true && leftHaving[Second] == false)
+        {
+            KillMe();
+            rightHaving[Second] = false;
+
+        }
+
+        pPlayer2->SetHand(false, false);
+
+        ballDrop[Second]++;
+        if (ballDrop[Second] < DROP_TIME)
+        {
+            ballDrop[Second]++;
+        }
+        else
+        {
+            pPlayer2->SetDamage(false);
+            ballDrop[Second] = 0;
+        }
     }
 
     //玉を持つ処理
@@ -144,6 +259,7 @@ void RedBall::Update()
     {
         int a = 0;
     }
+
 
     ////円の範囲外なら消える
     radius = (transform_.position_.x * transform_.position_.x) + (transform_.position_.z * transform_.position_.z);
@@ -178,20 +294,54 @@ void RedBall::OnCollision(GameObject* pTarget)
         //ゴールじゃなかったら落ちる
 
     }
-    else if (pTarget->GetObjectName() == "Player1" && pPlayer1->GetHand().second == false && throwBall == false)
+    else if (pTarget->GetObjectName() == "Player1" && throwBall[First] == false && pPlayer1->GetDamage() == false)
     {
-        //ボールを持っていないとき
-        if (pPlayer1->GetHand().first == false)
+        //ボールを当てられたら
+        if (throwBall[Second] == true)
         {
-            //右手でボール持つ
-            pPlayer1->SetHand(true, false);
-            rightHaving = true;
+            pPlayer1->SetDamage(true);
         }
-        else
+        //左でボールを持っていないとき
+        else if (pPlayer1->GetHand().second == false)
         {
-            //左手でボール持つ
-            pPlayer1->SetHand(true, true);
-            leftHaving = true;
+            if (pPlayer1->GetHand().first == false)
+            {
+                //右手でボール持つ
+                pPlayer1->SetHand(true, false);
+                rightHaving[First] = true;
+            }
+            else
+            {
+                //左手でボール持つ
+                pPlayer1->SetHand(true, true);
+                leftHaving[First] = true;
+            }
+        }
+
+    }
+    else if (pTarget->GetObjectName() == "Player2" && throwBall[Second] == false && pPlayer2->GetDamage() == false)
+    {
+        //ボールを当てられたら
+        if (throwBall[First] == true)
+        {
+            pPlayer2->SetDamage(true);
+        }
+        //左でボールを持っていないとき
+        else if (pPlayer2->GetHand().second == false)
+        {
+            //ボールを持っていないとき
+            if (pPlayer2->GetHand().first == false)
+            {
+                //右手でボール持つ
+                pPlayer2->SetHand(true, false);
+                rightHaving[Second] = true;
+            }
+            else
+            {
+                //左手でボール持つ
+                pPlayer2->SetHand(true, true);
+                leftHaving[Second] = true;
+            }
         }
     }
 }
