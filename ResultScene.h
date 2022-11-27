@@ -3,13 +3,15 @@
 
 
 //■■シーンを管理するクラス
-class GameoverScene : public GameObject
+class ResultScene : public GameObject
 {
 	int hPict_;    //画像番号
 public:
+	static int mode;
+
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
-	GameoverScene(GameObject* parent);
+	ResultScene(GameObject* parent);
 
 	//初期化
 	void Initialize() override;
@@ -22,4 +24,7 @@ public:
 
 	//開放
 	void Release() override;
+
+	
 };
+

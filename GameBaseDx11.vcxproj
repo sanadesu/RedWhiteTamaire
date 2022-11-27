@@ -131,14 +131,13 @@
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="BasePlayer.cpp" />
     <ClCompile Include="Basket.cpp" />
-    <ClCompile Include="ClearScene.cpp" />
+    <ClCompile Include="Player2.cpp" />
+    <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="Engine\Text.cpp" />
-    <ClCompile Include="GameoverScene.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="memo.cpp" />
-    <ClCompile Include="ModeScene.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Player1.cpp" />
     <ClCompile Include="Engine\Audio.cpp" />
     <ClCompile Include="Engine\BoxCollider.cpp" />
     <ClCompile Include="Engine\Camera.cpp" />
@@ -160,22 +159,19 @@
     <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="RedBall.cpp" />
-    <ClCompile Include="SetumeiScene.cpp" />
-    <ClCompile Include="TestScene.cpp" />
-    <ClCompile Include="titleScene.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="WhiteBall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
     <ClInclude Include="BasePlayer.h" />
     <ClInclude Include="Basket.h" />
-    <ClInclude Include="ClearScene.h" />
+    <ClInclude Include="Player2.h" />
+    <ClInclude Include="ResultScene.h" />
     <ClInclude Include="Engine\Text.h" />
-    <ClInclude Include="GameoverScene.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Log.h" />
-    <ClInclude Include="ModeScene.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="Player1.h" />
     <ClInclude Include="Engine\Audio.h" />
     <ClInclude Include="Engine\BoxCollider.h" />
     <ClInclude Include="Engine\Camera.h" />
@@ -197,9 +193,7 @@
     <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="RedBall.h" />
-    <ClInclude Include="SetumeiScene.h" />
-    <ClInclude Include="TestScene.h" />
-    <ClInclude Include="titleScene.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="WhiteBall.h" />
   </ItemGroup>
   <ItemGroup>

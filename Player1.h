@@ -2,12 +2,17 @@
 #include "Engine/GameObject.h"
 
 //◆◆◆を管理するクラス
-class Player : public GameObject
+class Player1 : public GameObject
 {
     int hModel_;    //モデル番号
 
-    const float MOVE = 0.1f;//移動距離
-    const float Z_ = 10.0f; //Z座標
+    const int CIRCLE_RANGE = 360;//丸の範囲？？？？
+    const float START_POS_X = 0.0f;
+    const float START_POS_Z = -3.0f;
+    const float HIT_SIZE = 1.2f;
+    const float RETURN_MOVE = 0.01f;
+    const float PLAYER_MOVE = 0.1f;//移動距離
+    const float CAMERA_Z = 20.0f; //Z座標
     float y_;               //Y座標
     float moveLimit;        //移動範囲
     bool rightHand;         //右手
@@ -15,10 +20,10 @@ class Player : public GameObject
     //Transform trans;
 public:
     //コンストラクタ
-    Player(GameObject* parent);
+    Player1(GameObject* parent);
 
     //デストラクタ
-    ~Player();
+    ~Player1();
 
     //初期化
     void Initialize() override;

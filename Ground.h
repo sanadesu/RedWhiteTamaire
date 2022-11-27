@@ -6,6 +6,7 @@ class Ground : public GameObject
 {
     int hModel_;    //モデル番号
 
+    const float GROUND_HEIGHT = -0.27;
 public:
     //コンストラクタ
     Ground(GameObject* parent);

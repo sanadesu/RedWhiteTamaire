@@ -7,11 +7,8 @@ enum SCENE_ID
 {
 	SCENE_ID_TEST = 0,
 	SCENE_ID_TITLE,
-	SCENE_ID_Mode,
-	SCENE_ID_Setumei,
 	SCENE_ID_PLAY,
-	SCENE_ID_Clear,
-	SCENE_ID_Gameover,
+	SCENE_ID_RESULT,
 };
 
 //-----------------------------------------------------------

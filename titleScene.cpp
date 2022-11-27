@@ -1,39 +1,41 @@
-#include "titleScene.h"
+#include "TitleScene.h"
 #include"Engine/Camera.h"
 #include "Engine/Image.h"
 #include "Engine/SceneManager.h"
 #include "Engine/Input.h"
 
 //コンストラクタ
-titleScene::titleScene(GameObject* parent)
-	: GameObject(parent, "titleScene"), hPict_(-1)
+TitleScene::TitleScene(GameObject* parent)
+	: GameObject(parent, "TitleScene"), hPict_(-1)
 {
 }
 
 //初期化
-void titleScene::Initialize()
+void TitleScene::Initialize()
 {
-
+	//画像データのロード
+	hPict_ = Image::Load("Title.png");
+	assert(hPict_ >= 0);
 }
 
 //更新
-void titleScene::Update()
+void TitleScene::Update()
 {
 	if (Input::IsKeyDown(DIK_SPACE))
 	{
 		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-		pSceneManager->ChangeScene(SCENE_ID_Mode);
+		pSceneManager->ChangeScene(SCENE_ID_PLAY);
 	}
 }
 
 //描画
-void titleScene::Draw()
+void TitleScene::Draw()
 {
 	Image::SetTransform(hPict_, transform_);
 	Image::Draw(hPict_);
 }
 
 //開放
-void titleScene::Release()
+void TitleScene::Release()
 {
 }

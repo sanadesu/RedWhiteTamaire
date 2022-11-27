@@ -28,7 +28,7 @@ void Basket::Initialize()
     transform_.position_ = XMFLOAT3(0, 0, 0);
 
     //“–‚½‚è”»’è
-    SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 5, 0), 0.8f);
+    SphereCollider* collision = new SphereCollider(XMFLOAT3(0, HIT_HEIGHT, 0), HIT_SIZE);
     AddCollider(collision);
 
     pText = new Text;

@@ -23,7 +23,7 @@ void Ground::Initialize()
     assert(hModel_ >= 0);
 
 
-    transform_.position_ = XMFLOAT3(0, -0.27, 0);
+    transform_.position_ = XMFLOAT3(0, GROUND_HEIGHT, 0);
 }
 
 //çXêV

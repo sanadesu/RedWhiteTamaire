@@ -1,7 +1,7 @@
 ////#pragma once
 ////#include "Engine/GameObject.h"
 ////#include "Engine/SphereCollider.h"
-////#include"Player.h"
+////#include"Player1.h"
 ////
 ////const int ballCount = 10000;
 //////◆◆◆を管理するクラス
@@ -20,7 +20,7 @@
 ////    float powerY;
 ////    float playerAngleY;
 ////    bool down;
-////    Player* pPlayer = new Player(nullptr);*/
+////    Player1* pPlayer1 = new Player1(nullptr);*/
 ////public:
 ////    //コンストラクタ
 ////    Ball(GameObject* parent);
@@ -129,15 +129,15 @@
 //        else if (Input::IsKeyUp(DIK_SPACE))
 //        {
 //            //powerY -= playerAngleY;//プレイヤーの角度
-//            if (pPlayer->GetRightHave().second == true)
+//            if (pPlayer1->GetRightHave().second == true)
 //            {
-//                pPlayer->SetRightHave(false, true);
+//                pPlayer1->SetRightHave(false, true);
 //                //leftHaving = false;
 //                //rightHaving = true;
 //            }
 //            else
 //            {
-//                pPlayer->SetRightHave(false, false);
+//                pPlayer1->SetRightHave(false, false);
 //
 //            }
 //
@@ -176,32 +176,32 @@
 //
 //    if (rightHaving == true)
 //    {
-//        transform_.position_ = pPlayer->GetPosition();
+//        transform_.position_ = pPlayer1->GetPosition();
 //        transform_.position_.x += 1;
 //        transform_.position_.y += 2.5;
 //    }
 //
 //    if (leftHaving == true)
 //    {
-//        transform_.position_ = pPlayer->GetPosition();
+//        transform_.position_ = pPlayer1->GetPosition();
 //        transform_.position_.x += -1;
 //        transform_.position_.y += 2.5;
 //    }
 //
-//    if (pPlayer->GetRightHave().first == false && pPlayer->GetRightHave().second == true)
+//    if (pPlayer1->GetRightHave().first == false && pPlayer1->GetRightHave().second == true)
 //    {
-//        pPlayer->SetRightHave(true, false);
-//        rightHaving = pPlayer->GetRightHave().first;
-//        leftHaving = pPlayer->GetRightHave().second;
+//        pPlayer1->SetRightHave(true, false);
+//        rightHaving = pPlayer1->GetRightHave().first;
+//        leftHaving = pPlayer1->GetRightHave().second;
 //
 //
 //    }
 //
-//    /*if (pPlayer->GetRightHave().first == false && rightHaving == true)
+//    /*if (pPlayer1->GetRightHave().first == false && rightHaving == true)
 //    {
 //        rightHaving = false;
 //        leftHaving = false;
-//        pPlayer->SetRightHave(false, false);
+//        pPlayer1->SetRightHave(false, false);
 //    }*/
 //
 //    //玉を持つ処理
@@ -250,19 +250,19 @@
 //        //ゴールじゃなかったら落ちる
 //
 //    }
-//    else if (pTarget->GetObjectName() == "Player" && pPlayer->GetRightHave().second == false)
+//    else if (pTarget->GetObjectName() == "Player1" && pPlayer1->GetRightHave().second == false)
 //    {
 //        //ボールを持っていないとき
-//        if (pPlayer->GetRightHave().first == false)
+//        if (pPlayer1->GetRightHave().first == false)
 //        {
 //            //右手でボール持つ
-//            pPlayer->SetRightHave(true, false);
+//            pPlayer1->SetRightHave(true, false);
 //            rightHaving = true;
 //        }
 //        else
 //        {
 //            //左手でボール持つ
-//            pPlayer->SetRightHave(true, true);
+//            pPlayer1->SetRightHave(true, true);
 //            leftHaving = true;
 //        }
 //    }

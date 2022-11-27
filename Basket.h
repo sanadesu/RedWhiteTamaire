@@ -6,6 +6,10 @@
 class Basket : public GameObject
 {
     int hModel_;    //ƒ‚ƒfƒ‹”Ô†
+
+    const float HIT_HEIGHT = 5.0f;
+    const float HIT_SIZE = 0.8f;
+
     int whiteSum;   //”’‹Ê‚Ì“¾“_
     int redSum;     //Ô‹Ê‚Ì“¾“_
     Text* pText;

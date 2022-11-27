@@ -80,18 +80,14 @@
     <ClCompile Include="Engine\Transform.cpp">
       <Filter>01Engine\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Engine\Audio.cpp">
       <Filter>01Engine\ResourceManager</Filter>
     </ClCompile>
     <ClCompile Include="PlayScene.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="ClearScene.cpp" />
+    <ClCompile Include="Player1.cpp" />
+    <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="memo.cpp" />
-    <ClCompile Include="titleScene.cpp" />
-    <ClCompile Include="ModeScene.cpp" />
-    <ClCompile Include="SetumeiScene.cpp" />
-    <ClCompile Include="GameoverScene.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Basket.cpp" />
     <ClCompile Include="Ground.cpp" />
@@ -102,6 +98,7 @@
     </ClCompile>
     <ClCompile Include="BasePlayer.cpp" />
     <ClCompile Include="Log.cpp" />
+    <ClCompile Include="Player2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -158,17 +155,13 @@
     <ClInclude Include="Engine\Transform.h">
       <Filter>01Engine\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="TestScene.h" />
     <ClInclude Include="Engine\Audio.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
     <ClInclude Include="PlayScene.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="ClearScene.h" />
-    <ClInclude Include="titleScene.h" />
-    <ClInclude Include="ModeScene.h" />
-    <ClInclude Include="SetumeiScene.h" />
-    <ClInclude Include="GameoverScene.h" />
+    <ClInclude Include="Player1.h" />
+    <ClInclude Include="ResultScene.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Basket.h" />
     <ClInclude Include="Ground.h" />
@@ -179,6 +172,7 @@
     </ClInclude>
     <ClInclude Include="BasePlayer.h" />
     <ClInclude Include="Log.h" />
+    <ClInclude Include="Player2.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

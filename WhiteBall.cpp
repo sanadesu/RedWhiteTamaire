@@ -18,22 +18,7 @@ WhiteBall::~WhiteBall()
 //初期化
 void WhiteBall::Initialize()
 {
-    //モデルデータのロード
-    hModel_ = Model::Load("WhiteBall.fbx");
-    assert(hModel_ >= 0);
-
-    transform_.position_ = XMFLOAT3(0, 0, 0);
-
-    do
-    {
-        transform_.position_.x = (float)(((float)(rand() % 3600) - 1800) / 100);
-        transform_.position_.z = (float)(((float)(rand() % 3600) - 1800) / 100);
-        radius = (transform_.position_.x * transform_.position_.x) + (transform_.position_.z * transform_.position_.z);
-    } while (radius > 360 || radius < 15);
-
-    //当たり判定
-    SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 0, 0), BALLSIZE);
-    AddCollider(collision);
+    //const int WhiteConstParam::DIAMETER = 3800;
 
     radius = 0;
     height = 1;
@@ -42,6 +27,24 @@ void WhiteBall::Initialize()
     throwBall = false;
     rightHaving = false;
     leftHaving = false;
+
+    //モデルデータのロード
+    hModel_ = Model::Load("WhiteBall.fbx");
+    assert(hModel_ >= 0);
+
+    transform_.position_ = XMFLOAT3(0, 0, 0);
+
+    do
+    {
+        transform_.position_.x = (float)(rand() % DIAMETER - (DIAMETER / HALF)) / CHANGE_DECIMAL;
+        transform_.position_.z = (float)(rand() % DIAMETER - (DIAMETER / HALF)) / CHANGE_DECIMAL;
+       
+        radius = (transform_.position_.x * transform_.position_.x) + (transform_.position_.z * transform_.position_.z);
+    } while (radius >= CIRCLE_RANGE || radius < NEAR_GOAL);
+
+    //当たり判定
+    SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 0, 0), BALLSIZE);
+    AddCollider(collision);
 }
 
 //更新
@@ -55,24 +58,24 @@ void WhiteBall::Update()
         {
             if (rightHaving == true)
             {
-                powerZ += 0.01;
+                powerZ += POWER;
                 //あとで向いてる角度にする
-                powerY -= 0.01;
+                powerY -= POWER;
                 throwBall = true;
             }
         }
         else if (Input::IsKeyUp(DIK_SPACE))
         {
             //ボールを2個もってたら
-            if (pPlayer->GetHand().second == true)
+            if (pPlayer1->GetHand().second == true)
             {
-                pPlayer->SetHand(false, true);
+                pPlayer1->SetHand(false, true);
             }
             else
             {
-                pPlayer->SetHand(false, false);
+                pPlayer1->SetHand(false, false);
             }
-            //powerY + Playerの向いてる角度
+            //powerY + Player1の向いてる角度
         }
         else
         {
@@ -84,7 +87,7 @@ void WhiteBall::Update()
             // スピードの演算
             transform_.position_.z += powerZ;
             transform_.position_.y -= powerY;
-            powerZ *= 0.97;//抵抗
+            powerZ *= RESISTANCE;//抵抗
 
             // バウンドの判定
             if (transform_.position_.y <= 0.0f)
@@ -92,11 +95,11 @@ void WhiteBall::Update()
                 transform_.position_.y = 0.0;
                 powerY = -powerY * BOUND;  // y軸のスピードを反転して玉入れっぽくあまり跳ねなくする
                 height = powerY; //高さ保存
-                powerZ *= 0.97;//抵抗
+                powerZ *= RESISTANCE;//抵抗
             }
             
-            //高さ＆移動が終わる
-            if (powerZ <= 0.001)
+            //移動が終わる
+            if (powerZ <= END_MOVE)
             {
                 powerZ = 0;
                 powerY = 0;
@@ -108,25 +111,25 @@ void WhiteBall::Update()
     //右手で持ってたら
     if (rightHaving == true)
     {
-        transform_.position_ = pPlayer->GetPosition();
-        transform_.position_.x += 1;
-        transform_.position_.y += 2.5;
+        transform_.position_ = pPlayer1->GetPosition();
+        transform_.position_.x += RIGHT_HAND_LENGTH;
+        transform_.position_.y += HAND_HEIGHT;
     }
 
     //左手で持ってたら
     if (leftHaving == true)
     {
-        transform_.position_ = pPlayer->GetPosition();
-        transform_.position_.x += -1;
-        transform_.position_.y += 2.5;
+        transform_.position_ = pPlayer1->GetPosition();
+        transform_.position_.x += LEFT_HAND_LENGTH;
+        transform_.position_.y += HAND_HEIGHT;
     }
 
     //ボールを右手に持ちかえる
-    if (pPlayer->GetHand().first == false && leftHaving == true)
+    if (pPlayer1->GetHand().first == false && leftHaving == true)
     {
         rightHaving = true;
         leftHaving = false;
-        pPlayer->SetHand(true, false);
+        pPlayer1->SetHand(true, false);
     }
 
     //玉を持つ処理
@@ -142,17 +145,11 @@ void WhiteBall::Update()
        int a = 0;
     }
 
-    //左シフト押したら元に戻す、後で消す
-    if (Input::IsKeyDown(DIK_LSHIFT))
-    {
-        pPlayer->SetHand(false, false);
-    }
-
-    //円の範囲外なら消える
+    
+    ////円の範囲外なら消える
     radius = (transform_.position_.x * transform_.position_.x) + (transform_.position_.z * transform_.position_.z);
-    if (radius > 400)
+    if (radius > CIRCLE_OUTSIDE)
     {
-        fieldWhiteBall--;
         KillMe();
     }
 }
@@ -177,25 +174,24 @@ void WhiteBall::OnCollision(GameObject* pTarget)
     {
         //ゴールに入ったら得点＋消える
         pBasket->WhiteCount();
-        fieldWhiteBall--;
         KillMe();
         
         //ゴールじゃなかったら落ちる
 
     }
-    else if (pTarget->GetObjectName() == "Player" && pPlayer->GetHand().second == false && throwBall == false)
+    else if (pTarget->GetObjectName() == "Player1" && pPlayer1->GetHand().second == false && throwBall == false)
     {
         //ボールを持っていないとき
-        if (pPlayer->GetHand().first == false)
+        if (pPlayer1->GetHand().first == false)
         {
             //右手でボール持つ
-            pPlayer->SetHand(true,false);
+            pPlayer1->SetHand(true,false);
             rightHaving = true;
         }
         else
         {
             //左手でボール持つ
-            pPlayer->SetHand(true, true);
+            pPlayer1->SetHand(true, true);
             leftHaving = true;
         }
     }

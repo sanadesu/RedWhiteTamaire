@@ -5,6 +5,7 @@
 //■■シーンを管理するクラス
 class PlayScene : public GameObject
 {
+	const int ALL_BALL = 30;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）

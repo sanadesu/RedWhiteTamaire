@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "Player1.h"
 #include "Engine/Input.h"
 #include "Engine/Model.h"
 #include "Engine/Camera.h"
@@ -6,30 +6,30 @@
 #include "Engine/SphereCollider.h"
 
 //コンストラクタ
-Player::Player(GameObject* parent)
-    :GameObject(parent, "Player"),
+Player1::Player1(GameObject* parent)
+    :GameObject(parent, "Player1"),
     hModel_(-1)
 {
 
 }
 
 //デストラクタ
-Player::~Player()
+Player1::~Player1()
 {
 
 }
 
 //初期化
-void Player::Initialize()
+void Player1::Initialize()
 {
     hModel_ = Model::Load("Player.fbx");
     assert(hModel_ >= 0);
 
     //trans.position_ = XMFLOAT3(0, 0, -3);
-    transform_.position_ = XMFLOAT3(0, -0.5, -3);
+    transform_.position_ = XMFLOAT3(START_POS_X, 0, START_POS_Z);
 
     //当たり判定
-    SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 1, 0), 1.2f);
+    SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 1, 0), HIT_SIZE);
     AddCollider(collision);
 
     y_ = 10.0f; //Y座標
@@ -39,27 +39,27 @@ void Player::Initialize()
 }
 
 //更新
-void Player::Update()
+void Player1::Update()
 {
     moveLimit = (transform_.position_.x * transform_.position_.x) + (transform_.position_.z * transform_.position_.z);
-    if (moveLimit > 360)
+    if (moveLimit > CIRCLE_RANGE)
     {
         if (transform_.position_.x < 0)
         {
-            transform_.position_.x += 0.01f;
+            transform_.position_.x += RETURN_MOVE;
         }
         else if(transform_.position_.x > 0)
         {
-            transform_.position_.x -= 0.01f;
+            transform_.position_.x -= RETURN_MOVE;
         }
 
         if (transform_.position_.z < 0)
         {
-            transform_.position_.z += 0.1f;
+            transform_.position_.z += RETURN_MOVE;
         }
         else if(transform_.position_.z > 0)
         {
-            transform_.position_.z -= 0.1f;
+            transform_.position_.z -= RETURN_MOVE;
         }
     }
     else
@@ -68,7 +68,7 @@ void Player::Update()
         if (Input::IsKey(DIK_W))
         {
             //transform_.position_.z += 0.5;
-            XMFLOAT3 move = { 0,0,MOVE }; //移動量
+            XMFLOAT3 move = { 0,0,PLAYER_MOVE }; //移動量
             XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
             XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));   //Y軸でｙ°回転させる行列
 
@@ -82,7 +82,7 @@ void Player::Update()
         //S押したら後退
         if (Input::IsKey(DIK_S))
         {
-            XMFLOAT3 move = { 0,0,-MOVE }; 
+            XMFLOAT3 move = { 0,0,-PLAYER_MOVE }; 
             XMVECTOR vMove = XMLoadFloat3(&move); 
             XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));   //Y軸で90°回転させる行列
 
@@ -96,7 +96,7 @@ void Player::Update()
         //D押したら右
         if (Input::IsKey(DIK_D))
         {
-            XMFLOAT3 move = { MOVE,0,0 }; //移動量
+            XMFLOAT3 move = { PLAYER_MOVE,0,0 }; //移動量
             XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
             XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));   //Y軸でｙ°回転させる行列
 
@@ -110,7 +110,7 @@ void Player::Update()
         //S押したら後退
         if (Input::IsKey(DIK_A))
         {
-            XMFLOAT3 move = { -MOVE,0,0 }; //
+            XMFLOAT3 move = { -PLAYER_MOVE,0,0 }; //
             XMVECTOR vMove = XMLoadFloat3(&move); //
             XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));   //Y軸で90°回転させる行列
             vMove = XMVector3TransformCoord(vMove, mRotate);	//ベクトルｖを行列ｍで変形
@@ -145,7 +145,7 @@ void Player::Update()
     
 
     //カメラ
-    XMVECTOR vCam = XMVectorSet(0.0f, y_, -Z_, 0.0f);
+    XMVECTOR vCam = XMVectorSet(0.0f, y_, -CAMERA_Z, 0.0f);
     XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
 
     vCam = XMVector3TransformCoord(vCam, mRotate);
@@ -164,39 +164,39 @@ void Player::Update()
 }
 
 //描画
-void Player::Draw()
+void Player1::Draw()
 {
     Model::SetTransform(hModel_, transform_);
     Model::Draw(hModel_);
 }
 
 //開放
-void Player::Release()
+void Player1::Release()
 {
   
 }
 
 //何かに当たった
-void Player::OnCollision(GameObject* pTarget)
+void Player1::OnCollision(GameObject* pTarget)
 {
     //当たったときの処理
 }
 
 //角度取得
-float Player::GetAngle()
+float Player1::GetAngle()
 {
     return 0;
 }
 
 //ボールを持つ
-void Player::SetHand(bool rightHand_,bool leftHand_)
+void Player1::SetHand(bool rightHand_,bool leftHand_)
 {
     rightHand = rightHand_;
     leftHand = leftHand_;
 }
 
 //ボールを持っているか
-std::pair<bool, bool> Player::GetHand()
+std::pair<bool, bool> Player1::GetHand()
 {
     return std::make_pair(rightHand, leftHand);
 }
