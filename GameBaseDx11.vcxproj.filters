@@ -99,6 +99,7 @@
     <ClCompile Include="BasePlayer.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Player2.cpp" />
+    <ClCompile Include="PoryLine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -173,6 +174,7 @@
     <ClInclude Include="BasePlayer.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Player2.h" />
+    <ClInclude Include="PoryLine.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

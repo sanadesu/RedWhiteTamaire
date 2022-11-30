@@ -49,6 +49,10 @@ void WhiteBall::Initialize()
     //当たり判定
     SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 0, 0), BALLSIZE);
     AddCollider(collision);
+
+    //ポリライン初期化
+    pLine = new PoryLine;
+    pLine->Load("tex.png");
 }
 
 //更新
@@ -118,6 +122,9 @@ void WhiteBall::Update()
             }
             else
             {
+                //ポリラインに現在の位置を伝える
+                pLine->AddPosition(transform_.position_);
+
                 rightHaving[i] = false;
                 leftHaving[i] = false;
                 // 加速度の演算
@@ -278,11 +285,16 @@ void WhiteBall::Draw()
 {
     Model::SetTransform(hModel_, transform_);
     Model::Draw(hModel_);
+
+    //ポリラインを描画
+    pLine->Draw();
 }
 
 //開放
 void WhiteBall::Release()
 {
+    //ポリライン解放
+    pLine->Release();
 }
 
 //当たり判定

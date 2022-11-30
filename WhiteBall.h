@@ -5,6 +5,7 @@
 #include "Player1.h"
 #include "Player2.h"
 #include "Basket.h"
+#include "PoryLine.h"
 
 //◆◆◆を管理するクラス
 class WhiteBall : public GameObject
@@ -56,6 +57,7 @@ class WhiteBall : public GameObject
     Player2* pPlayer2 = (Player2*)FindObject("Player2");
     Basket* pBasket = (Basket*)FindObject("Basket");
     GameObject* pWhiteBall = FindObject("WhiteBall");
+    PoryLine* pLine;
 public:
     //コンストラクタ
     WhiteBall(GameObject* parent);
