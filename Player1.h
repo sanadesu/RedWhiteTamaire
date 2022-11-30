@@ -55,4 +55,6 @@ public:
 
     //UŒ‚¡‚é
     bool GetDamage();
+
+    Transform GetPlayerPosition(float x_);
 };

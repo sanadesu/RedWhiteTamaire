@@ -32,6 +32,8 @@ void RedBall::Initialize()
         throwBall[i] = false;
         rightHaving[i] = false;
         leftHaving[i] = false;
+        chargePower[i] = false;
+        assist[i] = false;
     }
 
     //モデルデータのロード
@@ -49,6 +51,12 @@ void RedBall::Initialize()
     //当たり判定
     SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 0, 0), BALLSIZE);
     AddCollider(collision);
+
+    //ポリライン初期化
+    pLine = new PoryLine;
+    pLine->Load("tex.png");
+
+    trans.position_ = XMFLOAT3(0, 0, 0);
 }
 
 //更新
@@ -62,10 +70,12 @@ void RedBall::Update()
         if (i == First)
         {
             key = DIK_SPACE;
+            assistKey = DIK_F1;
         }
         else if (i == Second)
         {
             key = DIK_RETURN;
+            assistKey = DIK_F2;
         }
         else
         {
@@ -85,10 +95,33 @@ void RedBall::Update()
                     //あとで向いてる角度にする
                     powerY[i] -= POWER;
                     throwBall[i] = true;
+
+
+                    float trajectoryY[Max], trajectoryZ[Max];
+                    trajectoryY[i] = powerY[i];
+                    trajectoryZ[i] = powerZ[i];
+                    trans.position_ = transform_.position_;
+
+                    for (int j = 0; j < 30; j++)
+                    {
+                        // 加速度の演算
+                        trajectoryY[i] += GRAVITY;
+
+                        trans.position_.z += trajectoryZ[i];
+                        trans.position_.y -= trajectoryY[i];
+
+                        //// スピードの演算
+                        /*trans->position_.z += powerZ[i];
+                        trans->position_.y -= powerY[i];*/
+                        pLine->AddPosition(trans.position_);
+                        trajectoryZ[i] *= RESISTANCE;//抵抗
+                    }
+                    chargePower[i] = true;
                 }
             }
             else if (Input::IsKeyUp(key))
             {
+                chargePower[i] = false;
                 if (i == First)
                 {
                     //ボールを2個もってたら
@@ -145,6 +178,11 @@ void RedBall::Update()
                     throwBall[i] = false;
                 }
             }
+        }
+
+        if (Input::IsKeyDown(assistKey))
+        {
+            assist[i] = true;
         }
     }
 
@@ -274,11 +312,22 @@ void RedBall::Draw()
 {
     Model::SetTransform(hModel_, transform_);
     Model::Draw(hModel_);
+
+    for (int i = 0; i < Max; i++)
+    {
+        if (chargePower[i] == true)
+        {
+            //ポリラインを描画
+            pLine->Draw();
+        }
+    }
 }
 
 //開放
 void RedBall::Release()
 {
+    //ポリライン解放
+    pLine->Release();
 }
 
 //当たり判定

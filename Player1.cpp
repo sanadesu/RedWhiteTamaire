@@ -213,3 +213,13 @@ bool Player1::GetDamage()
     return damage;
 }
 
+Transform Player1::GetPlayerPosition(float x_)
+{
+    Transform trans = transform_;
+
+    //trans.rotate_.y += 120;
+    trans.position_.x += x_;
+    trans.position_.y += 2.5f;
+    return trans;
+}
+

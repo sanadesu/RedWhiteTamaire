@@ -32,6 +32,8 @@ void WhiteBall::Initialize()
         throwBall[i] = false;
         rightHaving[i] = false;
         leftHaving[i] = false;
+        chargePower[i] = false;
+        assist[i] = false;
     }
 
     //モデルデータのロード
@@ -53,6 +55,8 @@ void WhiteBall::Initialize()
     //ポリライン初期化
     pLine = new PoryLine;
     pLine->Load("tex.png");
+
+    trans.position_ = XMFLOAT3(0, 0, 0);
 }
 
 //更新
@@ -66,10 +70,12 @@ void WhiteBall::Update()
         if (i == First)
         {
             key = DIK_SPACE;
+            assistKey = DIK_F1;
         }
         else if (i == Second)
         {
             key = DIK_RETURN;
+            assistKey = DIK_F2;
         }
         else
         {
@@ -78,11 +84,15 @@ void WhiteBall::Update()
 
 
         //スペースキーを押したら
-        if ((Input::IsKeyDown(key) || throwBall[i] == true))
+        if (Input::IsKeyDown(key) || throwBall[i] == true)
         {
             //スペースを押してるとき
             if (Input::IsKey(key) && (rightHaving[i] == true || leftHaving[i] == true))
             {
+                
+                ////ポリラインに現在の位置を伝える
+                //pLine->AddPosition(transform_.position_);
+
                 if (rightHaving[i] == true)
                 {
                     powerZ[i] += POWER;
@@ -90,9 +100,37 @@ void WhiteBall::Update()
                     powerY[i] -= POWER;
                     throwBall[i] = true;
                 }
+
+                if ((rightHaving[i] == true))
+                {
+                    float trajectoryY[Max], trajectoryZ[Max];
+                        trajectoryY[i] = powerY[i];
+                        trajectoryZ[i] = powerZ[i];
+                        trans.position_ = transform_.position_;
+
+                        for (int j = 0; j < 30; j++)
+                        {
+                            // 加速度の演算
+                            trajectoryY[i] += GRAVITY;
+
+                                trans.position_.z += trajectoryZ[i];
+                            trans.position_.y -= trajectoryY[i];
+
+                            //// スピードの演算
+                            /*trans->position_.z += powerZ[i];
+                            trans->position_.y -= powerY[i];*/
+                            pLine->AddPosition(trans.position_);
+                            trajectoryZ[i] *= RESISTANCE;//抵抗
+                        }
+                        chargePower[i] = true;
+                }
+                
+                
             }
             else if (Input::IsKeyUp(key))
             {
+                //pLine->AddPosition(transform_.position_);
+                chargePower[i] = false;
                 if (i == First)
                 {
                     //ボールを2個もってたら
@@ -122,8 +160,7 @@ void WhiteBall::Update()
             }
             else
             {
-                //ポリラインに現在の位置を伝える
-                pLine->AddPosition(transform_.position_);
+                
 
                 rightHaving[i] = false;
                 leftHaving[i] = false;
@@ -155,14 +192,25 @@ void WhiteBall::Update()
                 }
             }
         }
+        
+        if (Input::IsKeyDown(assistKey))
+        {
+            assist[i] = true;
+        }
+
     }
 
+    ////ポリラインに現在の位置を伝える
+    //pLine->AddPosition(transform_.position_);
+    
     //右手で持ってたら
     if (rightHaving[First] == true)
     {
-        transform_.position_ = pPlayer1->GetPosition();
+        /*transform_.position_ = pPlayer1->GetPosition();
         transform_.position_.x += RIGHT_HAND_LENGTH;
-        transform_.position_.y += HAND_HEIGHT;
+        transform_.position_.y += HAND_HEIGHT;*/
+
+        transform_ = pPlayer1->GetPlayerPosition(RIGHT_HAND_LENGTH);
     }
     else if(rightHaving[Second] == true)
     {
@@ -286,8 +334,15 @@ void WhiteBall::Draw()
     Model::SetTransform(hModel_, transform_);
     Model::Draw(hModel_);
 
-    //ポリラインを描画
-    pLine->Draw();
+    for (int i = 0; i < Max; i++)
+    {
+        if (chargePower[i] == true && assist[i] == true)
+        {
+            //ポリラインを描画
+            pLine->Draw();
+        }
+    }
+    
 }
 
 //開放

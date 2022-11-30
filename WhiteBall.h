@@ -46,18 +46,22 @@ class WhiteBall : public GameObject
     int key;
     int radius;         //円の半径の2乗
     int ballDrop[Max];
+    int assistKey;
     float height[Max];       //バウンドの高さ
     float powerZ[Max];       //投げる距離
     float powerY[Max];       //投げる高さ
     bool throwBall[Max];     //ボールを投げている間
     bool rightHaving[Max];   //右手
     bool leftHaving[Max];    //左手
+    bool chargePower[Max];   //力をためているか
+    bool assist[Max];
 
     Player1* pPlayer1 = (Player1*)FindObject("Player1");
     Player2* pPlayer2 = (Player2*)FindObject("Player2");
     Basket* pBasket = (Basket*)FindObject("Basket");
     GameObject* pWhiteBall = FindObject("WhiteBall");
     PoryLine* pLine;
+    Transform trans;
 public:
     //コンストラクタ
     WhiteBall(GameObject* parent);
