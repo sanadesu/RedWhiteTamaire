@@ -82,55 +82,46 @@ void WhiteBall::Update()
             key = 0;
         }
 
-
         //スペースキーを押したら
         if (Input::IsKeyDown(key) || throwBall[i] == true)
         {
             //スペースを押してるとき
             if (Input::IsKey(key) && (rightHaving[i] == true || leftHaving[i] == true))
             {
-                
-                ////ポリラインに現在の位置を伝える
-                //pLine->AddPosition(transform_.position_);
-
                 if (rightHaving[i] == true)
                 {
                     powerZ[i] += POWER;
                     //あとで向いてる角度にする
                     powerY[i] -= POWER;
                     throwBall[i] = true;
-                }
 
-                if ((rightHaving[i] == true))
-                {
                     float trajectoryY[Max], trajectoryZ[Max];
-                        trajectoryY[i] = powerY[i];
-                        trajectoryZ[i] = powerZ[i];
-                        trans.position_ = transform_.position_;
+                    trajectoryY[i] = powerY[i];
+                    trajectoryZ[i] = powerZ[i];
+                    trans.position_ = transform_.position_;
 
-                        for (int j = 0; j < 30; j++)
-                        {
-                            // 加速度の演算
-                            trajectoryY[i] += GRAVITY;
+                    for (int j = 0; j < 30; j++)
+                    {
+                        // 加速度の演算
+                        trajectoryY[i] += GRAVITY;
 
-                                trans.position_.z += trajectoryZ[i];
-                            trans.position_.y -= trajectoryY[i];
+                        trans.position_.z += trajectoryZ[i];
+                        trans.position_.y -= trajectoryY[i];
 
-                            //// スピードの演算
-                            /*trans->position_.z += powerZ[i];
-                            trans->position_.y -= powerY[i];*/
-                            pLine->AddPosition(trans.position_);
-                            trajectoryZ[i] *= RESISTANCE;//抵抗
-                        }
-                        chargePower[i] = true;
+                        //// スピードの演算
+                        /*trans->position_.z += powerZ[i];
+                        trans->position_.y -= powerY[i];*/
+                        pLine->AddPosition(trans.position_);
+                        trajectoryZ[i] *= RESISTANCE;//抵抗
+                    }
+                    chargePower[i] = true;
                 }
-                
-                
-            }
+            }//離したとき
             else if (Input::IsKeyUp(key))
             {
                 //pLine->AddPosition(transform_.position_);
                 chargePower[i] = false;
+                //
                 if (i == First)
                 {
                     //ボールを2個もってたら
@@ -138,7 +129,7 @@ void WhiteBall::Update()
                     {
                         pPlayer1->SetHand(false, true);
                     }
-                    else
+                    else//1個なら
                     {
                         pPlayer1->SetHand(false, false);
                     }

@@ -30,6 +30,9 @@ void PlayScene::Initialize()
 		Instantiate<RedBall>(this);
 	}
 	Instantiate<Ground>(this);
+	pText = new Text;
+	pText->Initialize();
+	time = END_TIME;
 }
 
 //XV
@@ -41,16 +44,18 @@ void PlayScene::Update()
 		pSceneManager->ChangeScene(SCENE_ID_TITLE);
 	}
 
-	if (Input::IsKeyDown(DIK_2))
+	if (time <= 0)
 	{
 		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
 		pSceneManager->ChangeScene(SCENE_ID_RESULT);
 	}
+	time--;
 }
 
 //•`‰æ
 void PlayScene::Draw()
 {
+	pText->Draw(30, 90, (time/60));
 }
 
 //ŠJ•ú

@@ -315,7 +315,7 @@ void RedBall::Draw()
 
     for (int i = 0; i < Max; i++)
     {
-        if (chargePower[i] == true)
+        if (chargePower[i] == true && assist[i] == true)
         {
             //ƒ|ƒŠƒ‰ƒCƒ“‚ð•`‰æ
             pLine->Draw();

@@ -131,6 +131,7 @@
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="BasePlayer.cpp" />
     <ClCompile Include="Basket.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Player2.cpp" />
     <ClCompile Include="PoryLine.cpp" />
     <ClCompile Include="ResultScene.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="Ball.h" />
     <ClInclude Include="BasePlayer.h" />
     <ClInclude Include="Basket.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Player2.h" />
     <ClInclude Include="PoryLine.h" />
     <ClInclude Include="ResultScene.h" />
