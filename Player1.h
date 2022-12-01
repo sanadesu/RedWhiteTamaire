@@ -56,5 +56,7 @@ public:
     //çUåÇé°ÇÈ
     bool GetDamage();
 
-    Transform GetPlayerPosition(float x_);
+    XMFLOAT3 GetPlayerPosition(float x_);
+
+    XMFLOAT3 GetPlayerRotate();
 };

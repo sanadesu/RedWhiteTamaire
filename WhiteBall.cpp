@@ -201,7 +201,13 @@ void WhiteBall::Update()
         transform_.position_.x += RIGHT_HAND_LENGTH;
         transform_.position_.y += HAND_HEIGHT;*/
 
-        transform_ = pPlayer1->GetPlayerPosition(RIGHT_HAND_LENGTH);
+        /*transform_.position_ = pPlayer1->GetPosition();
+        transform_.rotate_ = pPlayer1->GetRotate();
+        transform_.position_ = pPlayer1->GetPlayerPosition(RIGHT_HAND_LENGTH);
+        transform_.rotate_;*/
+
+        //transform_.position_ = Model::GetBonePosition(hModel_,"joint1");
+        transform_.position_ = pPlayer1->GetPlayerPosition(RIGHT_HAND_LENGTH);
     }
     else if(rightHaving[Second] == true)
     {
@@ -216,12 +222,16 @@ void WhiteBall::Update()
         transform_.position_ = pPlayer1->GetPosition();
         transform_.position_.x += LEFT_HAND_LENGTH;
         transform_.position_.y += HAND_HEIGHT;
+
+        //transform_.position_ = pPlayer1->GetPlayerPosition(LEFT_HAND_LENGTH);
     }
     else if (leftHaving[Second] == true)
     {
         transform_.position_ = pPlayer2->GetPosition();
         transform_.position_.x += LEFT_HAND_LENGTH;
         transform_.position_.y += HAND_HEIGHT;
+
+        //transform_.position_ = pPlayer1->GetPlayerPosition(LEFT_HAND_LENGTH);
     }
 
     //ボールを右手に持ちかえる
@@ -230,12 +240,14 @@ void WhiteBall::Update()
         rightHaving[First] = true;
         leftHaving[First] = false;
         pPlayer1->SetHand(true, false);
+
     }
     else if (pPlayer2->GetHand().first == false && leftHaving[Second] == true)
     {
         rightHaving[Second] = true;
         leftHaving[Second] = false;
         pPlayer2->SetHand(true, false);
+
     }
 
     if (pPlayer1->GetDamage() == true)
@@ -316,6 +328,31 @@ void WhiteBall::Update()
     if (radius > CIRCLE_OUTSIDE)
     {
         KillMe();
+    }
+
+
+
+
+
+    //右押したら右回転
+    if (Input::IsKey(DIK_X))
+    {
+        transform_.rotate_.y++;
+    }
+    //左押したら左回転
+    if (Input::IsKey(DIK_Z))
+    {
+        transform_.rotate_.y--;
+    }
+    //右押したら右回転
+    if (Input::IsKey(DIK_C))
+    {
+        transform_.position_.z++;
+    }
+    //左押したら左回転
+    if (Input::IsKey(DIK_V))
+    {
+        transform_.position_.z--;
     }
 }
 

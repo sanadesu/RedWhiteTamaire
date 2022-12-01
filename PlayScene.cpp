@@ -18,6 +18,7 @@ PlayScene::PlayScene(GameObject* parent)
 //‰Šú‰»
 void PlayScene::Initialize()
 {
+	Instantiate<Ground>(this);
 	Instantiate<Player1>(this);
 	Instantiate<Player2>(this);
 	Instantiate<Basket>(this);
@@ -29,7 +30,7 @@ void PlayScene::Initialize()
 	{
 		Instantiate<RedBall>(this);
 	}
-	Instantiate<Ground>(this);
+
 	pText = new Text;
 	pText->Initialize();
 	time = END_TIME;

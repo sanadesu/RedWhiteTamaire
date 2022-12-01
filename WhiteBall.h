@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/GameObject.h"
 #include "Engine/SphereCollider.h"
+#include "Engine/Fbx.h"
 #include "Ball.h"
 #include "Player1.h"
 #include "Player2.h"
@@ -55,6 +56,7 @@ class WhiteBall : public GameObject
     bool leftHaving[Max];    //左手
     bool chargePower[Max];   //力をためているか
     bool assist[Max];
+    //XMFLOAT direction;
 
     Player1* pPlayer1 = (Player1*)FindObject("Player1");
     Player2* pPlayer2 = (Player2*)FindObject("Player2");
@@ -62,6 +64,7 @@ class WhiteBall : public GameObject
     GameObject* pWhiteBall = FindObject("WhiteBall");
     PoryLine* pLine;
     Transform trans;
+    //Fbx* pFbx;
 public:
     //コンストラクタ
     WhiteBall(GameObject* parent);

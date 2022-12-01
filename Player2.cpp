@@ -221,6 +221,32 @@ bool Player2::GetDamage()
     return damage;
 }
 
+
+XMFLOAT3 Player2::GetPlayerPosition(float x_)
+{
+    Transform trans = transform_;
+
+    trans.position_.x += x_;
+    trans.position_.y += 2.5f;
+    /*if (x_ > 0)
+    {
+        trans.position_ = Model::GetBonePosition(hModel_, "joint1");
+    }
+    else
+    {
+        trans.position_ = Model::GetBonePosition(hModel_, "joint2");
+    }*/
+
+
+    return trans.position_;
+}
+
+XMFLOAT3 Player2::GetPlayerRotate()
+{
+    Transform trans = transform_;
+    trans.rotate_.y += 120;
+    return trans.rotate_;
+}
 //pos
 //key
 //
