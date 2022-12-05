@@ -47,26 +47,38 @@ void Player1::Update()
     {
         if (transform_.position_.x < 0)
         {
-            transform_.position_.x += RETURN_MOVE;
+            a[0] = true;
+            //transform_.position_.x += RETURN_MOVE;
         }
         else if(transform_.position_.x > 0)
         {
-            transform_.position_.x -= RETURN_MOVE;
+            a[1] = true;
+            //transform_.position_.x -= RETURN_MOVE;
         }
 
         if (transform_.position_.z < 0)
         {
-            transform_.position_.z += RETURN_MOVE;
+            a[2] = true;
+            //transform_.position_.z += RETURN_MOVE;
         }
         else if(transform_.position_.z > 0)
         {
-            transform_.position_.z -= RETURN_MOVE;
+            a[3] = true;
+            //transform_.position_.z -= RETURN_MOVE;
         }
+        
     }
     else
     {
+        a[0] = false;
+        a[1] = false;
+        a[2] = false;
+        a[3] = false;
+    }
+    //else
+    {
         //W押したら前進
-        if (Input::IsKey(DIK_W))
+        if (Input::IsKey(DIK_W)&& a[3] == false)
         {
             //transform_.position_.z += 0.5;
             XMFLOAT3 move = { 0,0,PLAYER_MOVE }; //移動量
@@ -81,7 +93,7 @@ void Player1::Update()
             XMStoreFloat3(&transform_.position_, vPos);
         }
         //S押したら後退
-        if (Input::IsKey(DIK_S))
+        if (Input::IsKey(DIK_S) && a[2] == false)
         {
             XMFLOAT3 move = { 0,0,-PLAYER_MOVE }; 
             XMVECTOR vMove = XMLoadFloat3(&move); 
@@ -95,7 +107,7 @@ void Player1::Update()
             XMStoreFloat3(&transform_.position_, vPos); 
         }
         //D押したら右
-        if (Input::IsKey(DIK_D))
+        if (Input::IsKey(DIK_D) && a[1] == false)
         {
             XMFLOAT3 move = { PLAYER_MOVE,0,0 }; //移動量
             XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
@@ -109,7 +121,7 @@ void Player1::Update()
             XMStoreFloat3(&transform_.position_, vPos);
         }
         //A押したら
-        if (Input::IsKey(DIK_A))
+        if (Input::IsKey(DIK_A) && a[0] == false)
         {
             XMFLOAT3 move = { -PLAYER_MOVE,0,0 }; //
             XMVECTOR vMove = XMLoadFloat3(&move); //
@@ -219,14 +231,14 @@ XMFLOAT3 Player1::GetPlayerPosition(float x_)
 
     trans.position_.x += x_;
     trans.position_.y += 2.5f;
-    /*if (x_ > 0)
+    if (x_ > 0)
     {
         trans.position_ = Model::GetBonePosition(hModel_, "joint1");
     }
     else
     {
         trans.position_ = Model::GetBonePosition(hModel_, "joint2");
-    }*/
+    }
    
 
     return trans.position_;

@@ -228,14 +228,14 @@ XMFLOAT3 Player2::GetPlayerPosition(float x_)
 
     trans.position_.x += x_;
     trans.position_.y += 2.5f;
-    /*if (x_ > 0)
+    if (x_ > 0)
     {
         trans.position_ = Model::GetBonePosition(hModel_, "joint1");
     }
     else
     {
         trans.position_ = Model::GetBonePosition(hModel_, "joint2");
-    }*/
+    }
 
 
     return trans.position_;

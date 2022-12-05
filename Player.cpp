@@ -66,6 +66,24 @@ void Player::Update()
     }
     else
     {
+        for (int i = 0; i < Max; i++)
+        {
+            if (Input::IsPadButton(XINPUT_GAMEPAD_A, i))
+            {
+
+            }
+            if(Input::IsPadButton(XINPUT_GAMEPAD_LEFT_THUMB, i))
+            {
+                Input::GetPadStickL();
+            }
+        }
+        
+
+
+
+
+
+
         //W‰Ÿ‚µ‚½‚ç‘Oi
         if (Input::IsKey(key))
         {

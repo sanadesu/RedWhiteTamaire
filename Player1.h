@@ -13,6 +13,7 @@ class Player1 : public GameObject
     const float RETURN_MOVE = 0.01f;
     const float PLAYER_MOVE = 0.1f;//ˆÚ“®‹——£
     const float CAMERA_Z = 20.0f; //ZÀ•W
+    bool a[4] = {0,0,0,0};
     float y_;               //YÀ•W
     float moveLimit;        //ˆÚ“®”ÍˆÍ
     bool rightHand;         //‰Eè

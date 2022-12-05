@@ -107,8 +107,21 @@ void RedBall::Update()
                         // 加速度の演算
                         trajectoryY[i] += GRAVITY;
 
-                        trans.position_.z += trajectoryZ[i];
-                        trans.position_.y -= trajectoryY[i];
+                        trans.rotate_ = pPlayer1->GetRotate();
+                        XMFLOAT3 move = { 0,-trajectoryY[i],trajectoryZ[i] }; //移動量
+                        XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
+                        XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(trans.rotate_.y));   //Y軸でｙ°回転させる行列
+
+                        vMove = XMVector3TransformCoord(vMove, mRotate);	//ベクトルｖを行列ｍで変形
+                        XMVECTOR vPos = XMLoadFloat3(&trans.position_); //現在地をベクトルに変換
+
+                        vPos += vMove; //現在の位置ベクトルに移動量ベクトルを足す
+
+                        XMStoreFloat3(&trans.position_, vPos);
+
+
+                        /*trans.position_.z += trajectoryZ[i];
+                        trans.position_.y -= trajectoryY[i];*/
 
                         //// スピードの演算
                         /*trans->position_.z += powerZ[i];
@@ -157,8 +170,23 @@ void RedBall::Update()
                 powerY[i] += GRAVITY;
 
                 // スピードの演算
-                transform_.position_.z += powerZ[i];
-                transform_.position_.y -= powerY[i];
+
+                transform_.rotate_ = pPlayer1->GetRotate();
+
+                XMFLOAT3 move = { 0,-powerY[i],powerZ[i] }; //移動量
+                XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
+                XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));   //Y軸でｙ°回転させる行列
+
+                vMove = XMVector3TransformCoord(vMove, mRotate);	//ベクトルｖを行列ｍで変形
+                XMVECTOR vPos = XMLoadFloat3(&transform_.position_); //現在地をベクトルに変換
+
+                vPos += vMove; //現在の位置ベクトルに移動量ベクトルを足す
+
+                XMStoreFloat3(&transform_.position_, vPos);
+
+
+               /* transform_.position_.z += powerZ[i];
+                transform_.position_.y -= powerY[i];*/
                 powerZ[i] *= RESISTANCE;//抵抗
 
                 // バウンドの判定
@@ -189,30 +217,23 @@ void RedBall::Update()
     //右手で持ってたら
     if (rightHaving[First] == true)
     {
-        transform_.position_ = pPlayer1->GetPosition();
-        transform_.position_.x += RIGHT_HAND_LENGTH;
-        transform_.position_.y += HAND_HEIGHT;
+        transform_.position_ = pPlayer1->GetPlayerPosition(RIGHT_HAND_LENGTH);
     }
     else if (rightHaving[Second] == true)
     {
-        transform_.position_ = pPlayer2->GetPosition();
-        transform_.position_.x += RIGHT_HAND_LENGTH;
-        transform_.position_.y += HAND_HEIGHT;
+        transform_.position_ = pPlayer2->GetPlayerPosition(RIGHT_HAND_LENGTH);
     }
 
     //左手で持ってたら
     if (leftHaving[First] == true)
     {
-        transform_.position_ = pPlayer1->GetPosition();
-        transform_.position_.x += LEFT_HAND_LENGTH;
-        transform_.position_.y += HAND_HEIGHT;
+        transform_.position_ = pPlayer1->GetPlayerPosition(LEFT_HAND_LENGTH);
     }
     else if (leftHaving[Second] == true)
     {
-        transform_.position_ = pPlayer2->GetPosition();
-        transform_.position_.x += LEFT_HAND_LENGTH;
-        transform_.position_.y += HAND_HEIGHT;
+        transform_.position_ = pPlayer2->GetPlayerPosition(LEFT_HAND_LENGTH);
     }
+
     //ボールを右手に持ちかえる
     if (pPlayer1->GetHand().first == false && leftHaving[First] == true)
     {

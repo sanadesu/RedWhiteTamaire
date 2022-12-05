@@ -6,6 +6,15 @@ class Player : public GameObject
 {
     int hModel_;    //モデル番号
 
+    enum PlayerNumber
+    {
+        First,
+        Second,
+        Third,
+        Fourth,
+        Max
+    };
+
     const int CIRCLE_RANGE = 360;//丸の範囲？？？？
     const float START_POS_X = 0.0f;
     const float START_POS_Z = -3.0f;
@@ -16,6 +25,7 @@ class Player : public GameObject
     const float HAND_HEIGHT = 2.5f;
 
     int key;
+    int button;
     float y_;               //Y座標
     float moveLimit;        //移動範囲
     bool rightHand;         //右手
