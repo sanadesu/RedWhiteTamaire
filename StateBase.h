@@ -2,7 +2,7 @@
 class StateBase
 {
 public:
-	static StandingState standing;
+	//static StandingState standing;
 	virtual ~StateBase() {};
 	virtual void Update() {};
 	//------------------------•à‚­------------------------

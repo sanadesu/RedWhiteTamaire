@@ -46,6 +46,7 @@ void Player::Update()
     moveLimit = (transform_.position_.x * transform_.position_.x) + (transform_.position_.z * transform_.position_.z);
     if (moveLimit > CIRCLE_RANGE)
     {
+        //Œã‚Å•Ï‚¦‚é
         if (transform_.position_.x < 0)
         {
             transform_.position_.x += RETURN_MOVE;
