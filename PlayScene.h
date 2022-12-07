@@ -10,6 +10,7 @@ class PlayScene : public GameObject
 	const int END_TIME = 7200;
 	int time;
 	Text* pText;
+	int playerNumber;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）

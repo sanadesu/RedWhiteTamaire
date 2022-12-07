@@ -22,8 +22,11 @@ void PlayScene::Initialize()
 	Instantiate<Ground>(this);
 	Instantiate<Player1>(this);
 	Instantiate<Player2>(this);
-	//Instantiate<Player>(this);
-	//Instantiate<Player>(this);
+	Player* p1 = Instantiate<Player>(this);
+	p1->playerID = playerNumber;
+	playerNumber++;
+	Player* p2 = Instantiate<Player>(this);
+	p2->playerID = playerNumber;
 	Instantiate<Basket>(this);
 	for (int i = 0; i < ALL_BALL; i++)
 	{
@@ -37,6 +40,7 @@ void PlayScene::Initialize()
 	pText = new Text;
 	pText->Initialize();
 	time = END_TIME;
+	playerNumber = 0;
 }
 
 //XV

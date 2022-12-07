@@ -32,6 +32,8 @@ class Player : public GameObject
     bool leftHand;          //左手
     bool damage;            //攻撃を受けたか
 public:
+    int playerID;
+
     //コンストラクタ
     Player(GameObject* parent);
 
@@ -70,4 +72,5 @@ public:
     bool GetDamage();
 
     Transform GetPlayerPosition(bool right_);
+
 };

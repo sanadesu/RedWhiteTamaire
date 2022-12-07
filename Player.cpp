@@ -32,6 +32,7 @@ void Player::Initialize()
     SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 1, 0), HIT_SIZE);
     AddCollider(collision);
 
+    playerID = 0;
     key = 0;
     y_ = 10.0f; //Yç¿ïW
     moveLimit = 0.0f;
@@ -69,8 +70,9 @@ void Player::Update()
     {
         for (int i = 0; i < Max; i++)
         {
+            //XMFLOAT3
             //Ç»Ç∞ÇÈ
-            if (Input::IsPadButton(XINPUT_GAMEPAD_A, i))
+            if (Input::IsPadButton(XINPUT_GAMEPAD_A, i) && playerID == i)
             {
                 transform_.position_ = XMFLOAT3(0, 0, 0);
 
