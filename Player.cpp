@@ -27,7 +27,7 @@ void Player::Initialize()
 
     //trans.position_ = XMFLOAT3(0, 0, -3);
     transform_.position_ = XMFLOAT3(START_POS_X, 0, START_POS_Z);
-
+    transform_.position_.x = rand() % 20;
     //当たり判定
     SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 1, 0), HIT_SIZE);
     AddCollider(collision);
@@ -65,28 +65,33 @@ void Player::Update()
             transform_.position_.z -= RETURN_MOVE;
         }
     }
-    else
+
     {
         for (int i = 0; i < Max; i++)
         {
+            //なげる
             if (Input::IsPadButton(XINPUT_GAMEPAD_A, i))
             {
+                transform_.position_ = XMFLOAT3(0, 0, 0);
 
-            }
-            if(Input::IsPadButton(XINPUT_GAMEPAD_LEFT_THUMB, i))
+
+                if (rightHand == true)
+                {
+                    //力ためるやつ
+                }
+            }//拾う
+            if (Input::IsPadButton(XINPUT_GAMEPAD_B, i))
+            {
+
+            }//移動
+            /*if(Input::IsPadButton(XINPUT_GAMEPAD_LEFT_THUMB, i))
             {
                 Input::GetPadStickL();
-            }
+            }*/
         }
         
-
-
-
-
-
-
         //W押したら前進
-        if (Input::IsKey(key))
+        if (Input::IsKey(DIK_W))
         {
             //transform_.position_.z += 0.5;
             XMFLOAT3 move = { 0,0,PLAYER_MOVE }; //移動量
@@ -101,7 +106,7 @@ void Player::Update()
             XMStoreFloat3(&transform_.position_, vPos);
         }
         //S押したら後退
-        if (Input::IsKey(key))
+        if (Input::IsKey(DIK_S))
         {
             XMFLOAT3 move = { 0,0,-PLAYER_MOVE };
             XMVECTOR vMove = XMLoadFloat3(&move);
@@ -115,7 +120,7 @@ void Player::Update()
             XMStoreFloat3(&transform_.position_, vPos);
         }
         //D押したら右
-        if (Input::IsKey(key))
+        if (Input::IsKey(DIK_D))
         {
             XMFLOAT3 move = { PLAYER_MOVE,0,0 }; //移動量
             XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
@@ -129,7 +134,7 @@ void Player::Update()
             XMStoreFloat3(&transform_.position_, vPos);
         }
         //A押したら
-        if (Input::IsKey(key))
+        if (Input::IsKey(DIK_A))
         {
             XMFLOAT3 move = { -PLAYER_MOVE,0,0 }; //
             XMVECTOR vMove = XMLoadFloat3(&move); //
@@ -141,6 +146,11 @@ void Player::Update()
 
             XMStoreFloat3(&transform_.position_, vPos);
         }
+
+
+
+
+
     }
 
     //カメラ移動
@@ -233,13 +243,23 @@ bool Player::GetDamage()
     return damage;
 }
 
-Transform Player::GetPlayerPosition(float x_)
+Transform Player::GetPlayerPosition(bool right)
 {
     Transform trans = transform_;
 
     //trans.rotate_.y += 120;
-    trans.position_.x += x_;
-    trans.position_.y += HAND_HEIGHT;
+    //trans.position_.x += x_;
+    //trans.position_.y += HAND_HEIGHT;
+
+    if (right == true)
+    {
+        trans.position_ = Model::GetBonePosition(hModel_, "joint1");
+    }
+    else
+    {
+        trans.position_ = Model::GetBonePosition(hModel_, "joint2");
+    }
+
     return trans;
 }
 

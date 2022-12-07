@@ -229,8 +229,8 @@ XMFLOAT3 Player1::GetPlayerPosition(float x_)
 {
     Transform trans = transform_;
 
-    trans.position_.x += x_;
-    trans.position_.y += 2.5f;
+    /*trans.position_.x += x_;
+    trans.position_.y += 2.5f;*/
     if (x_ > 0)
     {
         trans.position_ = Model::GetBonePosition(hModel_, "joint1");
