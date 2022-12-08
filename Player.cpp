@@ -8,7 +8,7 @@
 //コンストラクタ
 Player::Player(GameObject* parent)
     :GameObject(parent, "Player"),
-    hModel_(-1)
+    hModel_(-1), pLine(nullptr)
 {
 
 }
@@ -34,11 +34,21 @@ void Player::Initialize()
 
     playerID = 0;
     key = 0;
+    powerY = 0.0f;
+    powerZ = 0.0f;
+    trajectoryY = 0.0f;
+    trajectoryZ = 0.0f;
     y_ = 10.0f; //Y座標
     moveLimit = 0.0f;
     rightHand = false;
     leftHand = false;
     damage = false;
+    chargePower = false;
+
+    pLine = new PoryLine;
+    pLine->Load("tex.png");
+
+    trans = transform_;
 }
 
 //更新
@@ -74,14 +84,52 @@ void Player::Update()
             //なげる
             if (Input::IsPadButton(XINPUT_GAMEPAD_A, i) && playerID == i)
             {
-                transform_.position_ = XMFLOAT3(0, 0, 0);
+                //transform_.position_ = XMFLOAT3(0, 0, 0);
 
 
-                if (rightHand == true)
+                //if (rightHand == true)
                 {
                     //力ためるやつ
+                    powerY -= POWER;
+                    powerZ += POWER;
+                    trajectoryY = powerY;
+                    trajectoryZ = powerZ;
+                    //右手の位置
+                    trans.position_ = Model::GetBonePosition(hModel_, "joint1");
+                    trans.position_ = transform_.position_;
+
+                    for (int j = 0; j < 30; j++)
+                    {
+                        // 加速度の演算
+                        trajectoryY += GRAVITY;
+
+
+                        trans.rotate_ = transform_.rotate_;
+                        XMFLOAT3 move = { 0,-trajectoryY,trajectoryZ }; //移動量
+                        XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
+                        XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(trans.rotate_.y));   //Y軸でｙ°回転させる行列
+
+                        vMove = XMVector3TransformCoord(vMove, mRotate);	//ベクトルｖを行列ｍで変形
+                        XMVECTOR vPos = XMLoadFloat3(&trans.position_); //現在地をベクトルに変換
+
+                        vPos += vMove; //現在の位置ベクトルに移動量ベクトルを足す
+
+                        XMStoreFloat3(&trans.position_, vPos);
+
+                        pLine->AddPosition(trans.position_);
+                        trajectoryZ *= RESISTANCE;//抵抗
+                    }
+                    chargePower = true;
                 }
-            }//拾う
+            }
+            else if(Input::IsPadButtonUp(XINPUT_GAMEPAD_A, i) && playerID == i)
+            {
+                chargePower = false;
+                powerY = 0;
+                powerZ = 0;
+            }
+           
+            //拾う
             if (Input::IsPadButton(XINPUT_GAMEPAD_B, i))
             {
 
@@ -150,45 +198,45 @@ void Player::Update()
         }
 
 
-
+        //pLine->AddPosition(transform_.position_);
 
 
     }
 
-    //カメラ移動
-    //右押したら右回転
-    if (Input::IsKey(key))
-    {
-        transform_.rotate_.y++;
-    }
-    //左押したら左回転
-    if (Input::IsKey(key))
-    {
-        transform_.rotate_.y--;
-    }
-    //右押したら右回転
-    if (Input::IsKey(key))
-    {
-        y_++;
-    }
-    //左押したら左回転
-    if (Input::IsKey(key))
-    {
-        y_--;
-    }
+    ////カメラ移動
+    ////右押したら右回転
+    //if (Input::IsKey(key))
+    //{
+    //    transform_.rotate_.y++;
+    //}
+    ////左押したら左回転
+    //if (Input::IsKey(key))
+    //{
+    //    transform_.rotate_.y--;
+    //}
+    ////右押したら右回転
+    //if (Input::IsKey(key))
+    //{
+    //    y_++;
+    //}
+    ////左押したら左回転
+    //if (Input::IsKey(key))
+    //{
+    //    y_--;
+    //}
 
 
-    //カメラ
-    XMVECTOR vCam = XMVectorSet(0.0f, y_, -CAMERA_Z, 0.0f);
-    XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
+    ////カメラ
+    //XMVECTOR vCam = XMVectorSet(0.0f, y_, -CAMERA_Z, 0.0f);
+    //XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
 
-    vCam = XMVector3TransformCoord(vCam, mRotate);
-    XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
-    XMFLOAT3 camPos;
-    XMStoreFloat3(&camPos, vPos + vCam);//カメラの座標
+    //vCam = XMVector3TransformCoord(vCam, mRotate);
+    //XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
+    //XMFLOAT3 camPos;
+    //XMStoreFloat3(&camPos, vPos + vCam);//カメラの座標
 
-    Camera::SetPosition(camPos);
-    Camera::SetTarget(transform_.position_);
+    //Camera::SetPosition(camPos);
+    //Camera::SetTarget(transform_.position_);
 
     //デバッグ用
     if (Input::IsKeyDown(DIK_B))
@@ -202,12 +250,19 @@ void Player::Draw()
 {
     Model::SetTransform(hModel_, transform_);
     Model::Draw(hModel_);
+
+    if (chargePower == true)
+    {
+        //ポリラインを描画
+        pLine->Draw();
+    }
 }
 
 //開放
 void Player::Release()
 {
-
+    //ポリライン解放
+    pLine->Release();
 }
 
 //何かに当たった
@@ -247,7 +302,7 @@ bool Player::GetDamage()
 
 Transform Player::GetPlayerPosition(bool right)
 {
-    Transform trans = transform_;
+    Transform trans_ = transform_;
 
     //trans.rotate_.y += 120;
     //trans.position_.x += x_;
@@ -255,13 +310,13 @@ Transform Player::GetPlayerPosition(bool right)
 
     if (right == true)
     {
-        trans.position_ = Model::GetBonePosition(hModel_, "joint1");
+        trans_.position_ = Model::GetBonePosition(hModel_, "joint1");
     }
     else
     {
-        trans.position_ = Model::GetBonePosition(hModel_, "joint2");
+        trans_.position_ = Model::GetBonePosition(hModel_, "joint2");
     }
 
-    return trans;
+    return trans_;
 }
 

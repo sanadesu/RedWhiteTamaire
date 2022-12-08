@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/GameObject.h"
+#include "PoryLine.h"
 
 //◆◆◆を管理するクラス
 class Player : public GameObject
@@ -16,6 +17,7 @@ class Player : public GameObject
     };
 
     const int CIRCLE_RANGE = 360;//丸の範囲？？？？
+    const float POWER = 0.01;
     const float START_POS_X = 0.0f;
     const float START_POS_Z = -3.0f;
     const float HIT_SIZE = 1.2f;
@@ -23,14 +25,24 @@ class Player : public GameObject
     const float PLAYER_MOVE = 0.1f;//移動距離
     const float CAMERA_Z = 20.0f; //Z座標
     const float HAND_HEIGHT = 2.5f;
+    const float GRAVITY = 0.05f;
+    const float RESISTANCE = 0.97f;
 
     int key;
     int button;
+    float powerY;
+    float powerZ;
+    float trajectoryY;
+    float trajectoryZ;
     float y_;               //Y座標
     float moveLimit;        //移動範囲
     bool rightHand;         //右手
     bool leftHand;          //左手
     bool damage;            //攻撃を受けたか
+    bool chargePower;
+
+    PoryLine* pLine;
+    Transform trans;
 public:
     int playerID;
 
