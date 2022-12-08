@@ -77,131 +77,135 @@ void Player::Update()
         }
     }
 
+
+    for (int i = 0; i < Max; i++)
     {
-        for (int i = 0; i < Max; i++)
+        //XMFLOAT3
+        //なげる
+        if (Input::IsPadButton(XINPUT_GAMEPAD_A, i) && playerID == i)
         {
-            //XMFLOAT3
-            //なげる
-            if (Input::IsPadButton(XINPUT_GAMEPAD_A, i) && playerID == i)
+            //transform_.position_ = XMFLOAT3(0, 0, 0);
+
+
+            //if (rightHand == true)
             {
-                //transform_.position_ = XMFLOAT3(0, 0, 0);
+                //力ためるやつ
+                powerY -= POWER;
+                powerZ += POWER;
+                trajectoryY = powerY;
+                trajectoryZ = powerZ;
+                //右手の位置
+                trans.position_ = Model::GetBonePosition(hModel_, "joint1");
+                trans.position_ = transform_.position_;
 
-
-                //if (rightHand == true)
+                for (int j = 0; j < 30; j++)
                 {
-                    //力ためるやつ
-                    powerY -= POWER;
-                    powerZ += POWER;
-                    trajectoryY = powerY;
-                    trajectoryZ = powerZ;
-                    //右手の位置
-                    trans.position_ = Model::GetBonePosition(hModel_, "joint1");
-                    trans.position_ = transform_.position_;
-
-                    for (int j = 0; j < 30; j++)
-                    {
-                        // 加速度の演算
-                        trajectoryY += GRAVITY;
+                    // 加速度の演算
+                    trajectoryY += GRAVITY;
 
 
-                        trans.rotate_ = transform_.rotate_;
-                        XMFLOAT3 move = { 0,-trajectoryY,trajectoryZ }; //移動量
-                        XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
-                        XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(trans.rotate_.y));   //Y軸でｙ°回転させる行列
+                    trans.rotate_ = transform_.rotate_;
+                    XMFLOAT3 move = { 0,-trajectoryY,trajectoryZ }; //移動量
+                    XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
+                    XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(trans.rotate_.y));   //Y軸でｙ°回転させる行列
 
-                        vMove = XMVector3TransformCoord(vMove, mRotate);	//ベクトルｖを行列ｍで変形
-                        XMVECTOR vPos = XMLoadFloat3(&trans.position_); //現在地をベクトルに変換
+                    vMove = XMVector3TransformCoord(vMove, mRotate);	//ベクトルｖを行列ｍで変形
+                    XMVECTOR vPos = XMLoadFloat3(&trans.position_); //現在地をベクトルに変換
 
-                        vPos += vMove; //現在の位置ベクトルに移動量ベクトルを足す
+                    vPos += vMove; //現在の位置ベクトルに移動量ベクトルを足す
 
-                        XMStoreFloat3(&trans.position_, vPos);
+                    XMStoreFloat3(&trans.position_, vPos);
 
-                        pLine->AddPosition(trans.position_);
-                        trajectoryZ *= RESISTANCE;//抵抗
-                    }
-                    chargePower = true;
+                    pLine->AddPosition(trans.position_);
+                    trajectoryZ *= RESISTANCE;//抵抗
                 }
+                chargePower = true;
             }
-            else if(Input::IsPadButtonUp(XINPUT_GAMEPAD_A, i) && playerID == i)
-            {
-                chargePower = false;
-                powerY = 0;
-                powerZ = 0;
-            }
-           
-            //拾う
-            if (Input::IsPadButton(XINPUT_GAMEPAD_B, i))
-            {
-
-            }//移動
-            /*if(Input::IsPadButton(XINPUT_GAMEPAD_LEFT_THUMB, i))
-            {
-                Input::GetPadStickL();
-            }*/
         }
-        
-        //W押したら前進
-        if (Input::IsKey(DIK_W))
+        else if (Input::IsPadButtonUp(XINPUT_GAMEPAD_A, i) && playerID == i)
         {
-            //transform_.position_.z += 0.5;
-            XMFLOAT3 move = { 0,0,PLAYER_MOVE }; //移動量
-            XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
-            XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));   //Y軸でｙ°回転させる行列
-
-            vMove = XMVector3TransformCoord(vMove, mRotate);	//ベクトルｖを行列ｍで変形
-            XMVECTOR vPos = XMLoadFloat3(&transform_.position_); //現在地をベクトルに変換
-
-            vPos += vMove; //現在の位置ベクトルに移動量ベクトルを足す
-
-            XMStoreFloat3(&transform_.position_, vPos);
+            chargePower = false;
+            powerY = 0;
+            powerZ = 0;
         }
-        //S押したら後退
-        if (Input::IsKey(DIK_S))
+
+        //拾う
+        if (Input::IsPadButton(XINPUT_GAMEPAD_B, i))
         {
-            XMFLOAT3 move = { 0,0,-PLAYER_MOVE };
-            XMVECTOR vMove = XMLoadFloat3(&move);
-            XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));   //Y軸で90°回転させる行列
 
-            vMove = XMVector3TransformCoord(vMove, mRotate);	//ベクトルｖを行列ｍで変形
-            XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
-
-            vPos += vMove;
-
-            XMStoreFloat3(&transform_.position_, vPos);
-        }
-        //D押したら右
-        if (Input::IsKey(DIK_D))
+        }//移動
+        if(playerID == i)
         {
-            XMFLOAT3 move = { PLAYER_MOVE,0,0 }; //移動量
-            XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
-            XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));   //Y軸でｙ°回転させる行列
-
-            vMove = XMVector3TransformCoord(vMove, mRotate);	//ベクトルｖを行列ｍで変形
-            XMVECTOR vPos = XMLoadFloat3(&transform_.position_); //現在地をベクトルに変換
-
-            vPos += vMove; //現在の位置ベクトルに移動量ベクトルを足す
-
-            XMStoreFloat3(&transform_.position_, vPos);
+            XMFLOAT3 a = Input::GetPadStickL(i);
+            a.x /= 10;
+            a.y /= 10;
+            transform_.position_.x += a.x;
+            transform_.position_.z += a.y;
         }
-        //A押したら
-        if (Input::IsKey(DIK_A))
-        {
-            XMFLOAT3 move = { -PLAYER_MOVE,0,0 }; //
-            XMVECTOR vMove = XMLoadFloat3(&move); //
-            XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));   //Y軸で90°回転させる行列
-            vMove = XMVector3TransformCoord(vMove, mRotate);	//ベクトルｖを行列ｍで変形
-            XMVECTOR vPos = XMLoadFloat3(&transform_.position_); //
+    }
 
-            vPos += vMove;
+    ////W押したら前進
+    //if (Input::IsKey(DIK_W))
+    //{
+    //    //transform_.position_.z += 0.5;
+    //    XMFLOAT3 move = { 0,0,PLAYER_MOVE }; //移動量
+    //    XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
+    //    XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));   //Y軸でｙ°回転させる行列
 
-            XMStoreFloat3(&transform_.position_, vPos);
-        }
+    //    vMove = XMVector3TransformCoord(vMove, mRotate);	//ベクトルｖを行列ｍで変形
+    //    XMVECTOR vPos = XMLoadFloat3(&transform_.position_); //現在地をベクトルに変換
+
+    //    vPos += vMove; //現在の位置ベクトルに移動量ベクトルを足す
+
+    //    XMStoreFloat3(&transform_.position_, vPos);
+    //}
+    ////S押したら後退
+    //if (Input::IsKey(DIK_S))
+    //{
+    //    XMFLOAT3 move = { 0,0,-PLAYER_MOVE };
+    //    XMVECTOR vMove = XMLoadFloat3(&move);
+    //    XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));   //Y軸で90°回転させる行列
+
+    //    vMove = XMVector3TransformCoord(vMove, mRotate);	//ベクトルｖを行列ｍで変形
+    //    XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
+
+    //    vPos += vMove;
+
+    //    XMStoreFloat3(&transform_.position_, vPos);
+    //}
+    ////D押したら右
+    //if (Input::IsKey(DIK_D))
+    //{
+    //    XMFLOAT3 move = { PLAYER_MOVE,0,0 }; //移動量
+    //    XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
+    //    XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));   //Y軸でｙ°回転させる行列
+
+    //    vMove = XMVector3TransformCoord(vMove, mRotate);	//ベクトルｖを行列ｍで変形
+    //    XMVECTOR vPos = XMLoadFloat3(&transform_.position_); //現在地をベクトルに変換
+
+    //    vPos += vMove; //現在の位置ベクトルに移動量ベクトルを足す
+
+    //    XMStoreFloat3(&transform_.position_, vPos);
+    //}
+    ////A押したら
+    //if (Input::IsKey(DIK_A))
+    //{
+    //    XMFLOAT3 move = { -PLAYER_MOVE,0,0 }; //
+    //    XMVECTOR vMove = XMLoadFloat3(&move); //
+    //    XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));   //Y軸で90°回転させる行列
+    //    vMove = XMVector3TransformCoord(vMove, mRotate);	//ベクトルｖを行列ｍで変形
+    //    XMVECTOR vPos = XMLoadFloat3(&transform_.position_); //
+
+    //    vPos += vMove;
+
+    //    XMStoreFloat3(&transform_.position_, vPos);
+    //}
 
 
         //pLine->AddPosition(transform_.position_);
 
 
-    }
+    
 
     ////カメラ移動
     ////右押したら右回転
@@ -268,7 +272,13 @@ void Player::Release()
 //何かに当たった
 void Player::OnCollision(GameObject* pTarget)
 {
-    //当たったときの処理
+    for (int i = 0; i < Max; i++)
+    {
+        if (pTarget->GetObjectName() == "WhiteBall" && playerID == i)
+        {
+            pWhiteBall->
+        }
+    }
 }
 
 //角度取得
