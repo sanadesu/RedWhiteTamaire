@@ -31,6 +31,7 @@ class Player : public GameObject
 
     int key;
     int button;
+    int processID;
     float powerY;
     float powerZ;
     float trajectoryY;

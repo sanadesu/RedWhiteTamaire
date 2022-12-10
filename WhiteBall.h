@@ -7,6 +7,7 @@
 #include "Player2.h"
 #include "Basket.h"
 #include "PoryLine.h"
+#include "Player.h"
 
 //◆◆◆を管理するクラス
 class WhiteBall : public GameObject
@@ -60,6 +61,7 @@ class WhiteBall : public GameObject
 
     Player1* pPlayer1 = (Player1*)FindObject("Player1");
     Player2* pPlayer2 = (Player2*)FindObject("Player2");
+    Player* pPlayer = (Player*)FindObject("Player");
     Basket* pBasket = (Basket*)FindObject("Basket");
     GameObject* pWhiteBall = FindObject("WhiteBall");
     PoryLine* pLine;
@@ -87,5 +89,9 @@ public:
     //何かに当たった
     //引数：pTarget 当たった相手
     void OnCollision(GameObject* pTarget) override;
+
+    //プレイヤーがボールをもつ
+    //引数：コントローラーの番号 , 右手に持つか
+    void HandPos(int playerID_, bool rightHand_);
 
 };

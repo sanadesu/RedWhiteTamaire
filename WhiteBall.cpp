@@ -474,3 +474,8 @@ void WhiteBall::OnCollision(GameObject* pTarget)
     }
 }
 
+void WhiteBall::HandPos(int playerID_, bool rightHand_)
+{
+   
+}
+

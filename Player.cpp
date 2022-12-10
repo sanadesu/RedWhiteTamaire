@@ -34,6 +34,7 @@ void Player::Initialize()
 
     playerID = 0;
     key = 0;
+    processID = 0;
     powerY = 0.0f;
     powerZ = 0.0f;
     trajectoryY = 0.0f;
@@ -276,7 +277,8 @@ void Player::OnCollision(GameObject* pTarget)
     {
         if (pTarget->GetObjectName() == "WhiteBall" && playerID == i)
         {
-            pWhiteBall->
+            processID = i;
+            //pWhiteBall->
         }
     }
 }
