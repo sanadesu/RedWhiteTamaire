@@ -2,6 +2,7 @@
 #include "Engine/GameObject.h"
 #include "PoryLine.h"
 #include "WhiteBall.h"
+#include "Ball.h"
 
 //ŸŸŸ‚ğŠÇ—‚·‚éƒNƒ‰ƒX
 class Player : public GameObject
@@ -45,7 +46,7 @@ class Player : public GameObject
 
     PoryLine* pLine;
     Transform trans;
-    WhiteBall* pWhiteBall = (WhiteBall*)FindObject("WhiteBall");
+    Ball* pBall = (Ball*)FindObject("Ball");
 public:
     int playerID;
 

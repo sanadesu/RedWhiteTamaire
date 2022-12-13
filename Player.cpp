@@ -125,6 +125,7 @@ void Player::Update()
         }
         else if (Input::IsPadButtonUp(XINPUT_GAMEPAD_A, i) && playerID == i)
         {
+            pBall->SetPower(powerY, powerZ,transform_.rotate_.y);
             chargePower = false;
             powerY = 0;
             powerZ = 0;
@@ -275,10 +276,26 @@ void Player::OnCollision(GameObject* pTarget)
 {
     for (int i = 0; i < Max; i++)
     {
-        if (pTarget->GetObjectName() == "WhiteBall" && playerID == i)
+        if (pTarget->GetObjectName() == "Ball" && playerID == i)
         {
-            processID = i;
+            //落ちてるボールか投げてるボールか転がってるボールか
+            //↑ボールの状態取得して判別
+            //ここには投げてるボールだけになる（あとで）
+
+            //落ちてるボール
+            //processID = i;
             //pWhiteBall->
+            pTarget->SetPosition(Model::GetBonePosition(hModel_, "joint1"));
+            pBall->SetPlayerModel(hModel_);
+            XMFLOAT3 a = Model::GetBonePosition(hModel_, "joint1");
+            a = XMFLOAT3(1, 1, 1);
+            //pBall->HandPos(i,true);
+            //pBall->PlayerBone(a);
+
+            //投げてるボール
+            //持ってるボールを消す
+            //一定時間拾えない
+            //点滅
         }
     }
 }

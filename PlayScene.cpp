@@ -6,6 +6,7 @@
 #include "Basket.h"
 #include "WhiteBall.h"
 #include "RedBall.h"
+#include "Ball.h"
 #include "Engine/Image.h"
 #include "Engine/Input.h"
 #include "Engine/SceneManager.h"
@@ -28,12 +29,14 @@ void PlayScene::Initialize()
 	Player* p2 = Instantiate<Player>(this);
 	p2->playerID = playerNumber;
 	Instantiate<Basket>(this);
-	for (int i = 0; i < ALL_BALL; i++)
+	//for (int i = 0; i < ALL_BALL; i++)
 	{
 		Instantiate<WhiteBall>(this);
 	}
 	for (int i = 0; i < ALL_BALL; i++)
 	{
+		Instantiate<Ball>(this);
+
 		Instantiate<RedBall>(this);
 	}
 
