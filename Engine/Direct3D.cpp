@@ -122,32 +122,32 @@ namespace Direct3D
 		//レンダリング結果を表示する範囲
 		//★
 		////左画面用
-		//{
-		//	vp_left.Width = (float)screenWidth / 2;			//幅
-		//	vp_left.Height = (float)screenHeight;		//高さ
-		//	vp_left.MinDepth = 0.0f;		//手前
-		//	vp_left.MaxDepth = 1.0f;		//奥
-		//	vp_left.TopLeftX = 0;		//左
-		//	vp_left.TopLeftY = 0;		//上
-		//}
+		{
+			vp_left.Width = (float)screenWidth / 2;			//幅
+			vp_left.Height = (float)screenHeight;		//高さ
+			vp_left.MinDepth = 0.0f;		//手前
+			vp_left.MaxDepth = 1.0f;		//奥
+			vp_left.TopLeftX = 0;		//左
+			vp_left.TopLeftY = 0;		//上
+		}
 
-		////右画面用
-		//{
-		//	vp_right.Width = (float)screenWidth / 2;			//幅
-		//	vp_right.Height = (float)screenHeight;		//高さ
-		//	vp_right.MinDepth = 0.0f;		//手前
-		//	vp_right.MaxDepth = 1.0f;		//奥
-		//	vp_right.TopLeftX = (float)screenWidth / 2;		//左
-		//	vp_right.TopLeftY = 0;		//上
-		//}
+		//右画面用
+		{
+			vp_right.Width = (float)screenWidth / 2;			//幅
+			vp_right.Height = (float)screenHeight;		//高さ
+			vp_right.MinDepth = 0.0f;		//手前
+			vp_right.MaxDepth = 1.0f;		//奥
+			vp_right.TopLeftX = (float)screenWidth / 2;		//左
+			vp_right.TopLeftY = 0;		//上
+		}
 
-		D3D11_VIEWPORT vp;
-		vp.Width = (float)screenWidth;			//幅
-		vp.Height = (float)screenHeight;		//高さ
-		vp.MinDepth = 0.0f;		//手前
-		vp.MaxDepth = 1.0f;		//奥
-		vp.TopLeftX = 0;		//左
-		vp.TopLeftY = 0;		//上
+		//D3D11_VIEWPORT vp;
+		//vp.Width = (float)screenWidth;			//幅
+		//vp.Height = (float)screenHeight;		//高さ
+		//vp.MinDepth = 0.0f;		//手前
+		//vp.MaxDepth = 1.0f;		//奥
+		//vp.TopLeftX = 0;		//左
+		//vp.TopLeftY = 0;		//上
 
 
 		//各パターンのシェーダーセット準備
@@ -194,7 +194,7 @@ namespace Direct3D
 		//データを画面に描画するための一通りの設定
 		pContext_->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);  // データの入力種類を指定
 		pContext_->OMSetRenderTargets(1, &pRenderTargetView_, pDepthStencilView);            // 描画先を設定（今後はレンダーターゲットビューを介して描画してね）
-		pContext_->RSSetViewports(1, &vp);                                      // ビューポートのセット
+		//pContext_->RSSetViewports(1, &vp);                                      // ビューポートのセット
 		//★
 
 

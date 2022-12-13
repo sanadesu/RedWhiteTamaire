@@ -167,8 +167,11 @@ void Player1::Update()
     XMFLOAT3 camPos;
     XMStoreFloat3(&camPos, vPos + vCam);//カメラの座標
 
+    Direct3D::SetViewPort(0);
     Camera::SetPosition(camPos);
     Camera::SetTarget(transform_.position_);
+
+
 
     //デバッグ用
     if (Input::IsKeyDown(DIK_B))

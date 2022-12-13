@@ -23,7 +23,7 @@ void Basket::Initialize()
 {
     hModel_ = Model::Load("Goal.fbx");
     assert(hModel_ >= 0);
-
+    transform_.scale_ = XMFLOAT3(1.0f, 1.0f, 1.0f);
     
     transform_.position_ = XMFLOAT3(0, 0, 0);
 

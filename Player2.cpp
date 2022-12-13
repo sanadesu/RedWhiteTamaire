@@ -163,6 +163,7 @@ void Player2::Update()
     //XMFLOAT3 camPos;
     //XMStoreFloat3(&camPos, vPos + vCam);//ÉJÉÅÉâÇÃç¿ïW
 
+    //Direct3D::SetViewPort(1);
     //Camera::SetPosition(camPos);
     //Camera::SetTarget(transform_.position_);
 

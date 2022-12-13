@@ -47,6 +47,7 @@ void Text::Draw(int x, int y, const char* str)
     px /= (float)(Direct3D::screenWidth_ / 2.0f);
     py /= (float)(Direct3D::screenHeight_ / 2.0f);
 
+
     //‚P•¶š‚¸‚Â•\¦‚·‚é
     for (int i = 0; str[i] != '\0'; i++)    //•¶š—ñ‚Ì––”ö‚Ü‚Å—ˆ‚½‚çI‚í‚è
     {
