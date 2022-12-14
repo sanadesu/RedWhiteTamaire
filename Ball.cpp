@@ -299,6 +299,7 @@ Ball::~Ball()
 void Ball::Initialize()
 {
     //const int WhiteConstParam::DIAMETER = 3800;
+    ballID = 0;
 
     key = 0;
     radius = 0;
@@ -340,14 +341,7 @@ void Ball::Initialize()
 void Ball::Update()
 {
     //後でキーを変えられるようにしてfor文
-    //パワー渡す
-    if (Input::IsPadButtonUp(XINPUT_GAMEPAD_A) && throwBall == false)
-    {
-        throwBall = true;
-        powerY = -0.5;
-        powerZ = 0.5;
-    }
-
+    
     //投げるときのボールの動き
     if (throwBall == true)
     {
@@ -394,6 +388,13 @@ void Ball::Update()
         }
     }
 
+    ////パワー渡す
+    //if (Input::IsPadButtonUp(XINPUT_GAMEPAD_A) && throwBall == false)
+    //{
+    //    throwBall = true;
+    //    /* powerY = -0.5;
+    //     powerZ = 0.5;*/
+    //}
 
 
     for (int i = 0; i < Max; i++)
@@ -740,15 +741,17 @@ void Ball::PlayerBone(XMFLOAT3 bone)
 
 void Ball::SetPower(float powerY_, float powerZ_, float playerRotateY_)
 {
-   /* powerY = powerY_;
+    powerY = powerY_;
     powerZ = powerZ_;
-    playerRotateY = playerRotateY_;*/
+    playerRotateY = playerRotateY_;
+    throwBall = true;
 }
 
-void Ball::SetPlayerModel(int model_)
+void Ball::SetPlayerModel(int model_, int ballID_)
 {
     //できない
-    //playerModel = model_;
-    //transform_.position_ = Model::GetBonePosition(playerModel, "joint1");
+    playerModel = model_;
+    transform_.position_ = Model::GetBonePosition(playerModel, "joint1");
+
 }
 
