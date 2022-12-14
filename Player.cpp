@@ -97,7 +97,7 @@ void Player::Update()
                 trajectoryZ = powerZ;
                 //‰EŽè‚ÌˆÊ’u
                 trans.position_ = Model::GetBonePosition(hModel_, "joint1");
-                trans.position_ = transform_.position_;
+                //trans.position_ = transform_.position_;
 
                 for (int j = 0; j < 30; j++)
                 {
@@ -288,7 +288,7 @@ void Player::OnCollision(GameObject* pTarget)
             pTarget->SetPosition(Model::GetBonePosition(hModel_, "joint1"));
             pBall->SetPlayerModel(hModel_);
             XMFLOAT3 a = Model::GetBonePosition(hModel_, "joint1");
-            a = XMFLOAT3(1, 1, 1);
+            //a = XMFLOAT3(1, 1, 1);
             //pBall->HandPos(i,true);
             //pBall->PlayerBone(a);
 
