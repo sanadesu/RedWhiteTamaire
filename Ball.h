@@ -101,4 +101,6 @@ public:
     void SetPower(float powerY, float powerZ, float rotatePlayer);
 
     void SetPlayerModel(int model_, int ballID_);
+
+    int GetBallNum();
 };

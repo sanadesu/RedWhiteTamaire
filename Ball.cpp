@@ -288,6 +288,7 @@ Ball::Ball(GameObject* parent)
     :GameObject(parent, "Ball")
 {
     hModel_ = -1;
+    ballID = 0;
 }
 
 //デストラクタ
@@ -299,7 +300,7 @@ Ball::~Ball()
 void Ball::Initialize()
 {
     //const int WhiteConstParam::DIAMETER = 3800;
-    ballID = 0;
+    
 
     key = 0;
     radius = 0;
@@ -753,5 +754,10 @@ void Ball::SetPlayerModel(int model_, int ballID_)
     playerModel = model_;
     transform_.position_ = Model::GetBonePosition(playerModel, "joint1");
 
+}
+
+int Ball::GetBallNum()
+{
+    return ballID;
 }
 

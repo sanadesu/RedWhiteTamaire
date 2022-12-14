@@ -33,14 +33,16 @@ class Player : public GameObject
     int key;
     int button;
     int processID;
+    int rightHand;
+    int leftHand;
     float powerY;
     float powerZ;
     float trajectoryY;
     float trajectoryZ;
     float y_;               //Y座標
     float moveLimit;        //移動範囲
-    bool rightHand;         //右手
-    bool leftHand;          //左手
+    //bool rightHand;         //右手
+    //bool leftHand;          //左手
     bool damage;            //攻撃を受けたか
     bool chargePower;
 
@@ -75,11 +77,11 @@ public:
     //角度取得
     float GetAngle();
 
-    //ボールを持つ
-    void SetHand(bool rightHand_, bool leftHand_);
+    ////ボールを持つ
+    //void SetHand(bool rightHand_, bool leftHand_);
 
-    //ボールを持っているか
-    std::pair<bool, bool> GetHand();
+    ////ボールを持っているか
+    //std::pair<bool, bool> GetHand();
 
     //攻撃を受ける
     void SetDamage(bool damage_);
