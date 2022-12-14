@@ -299,6 +299,7 @@ Ball::~Ball()
 void Ball::Initialize()
 {
     //const int WhiteConstParam::DIAMETER = 3800;
+    ballID = 0;
 
     key = 0;
     radius = 0;
@@ -746,7 +747,7 @@ void Ball::SetPower(float powerY_, float powerZ_, float playerRotateY_)
     throwBall = true;
 }
 
-void Ball::SetPlayerModel(int model_)
+void Ball::SetPlayerModel(int model_, int ballID_)
 {
     //‚Å‚«‚È‚¢
     playerModel = model_;

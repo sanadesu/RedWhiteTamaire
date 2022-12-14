@@ -286,7 +286,7 @@ void Player::OnCollision(GameObject* pTarget)
             //processID = i;
             //pWhiteBall->
             pTarget->SetPosition(Model::GetBonePosition(hModel_, "joint1"));
-            pBall->SetPlayerModel(hModel_);
+            //pBall->SetPlayerModel(hModel_);
             XMFLOAT3 a = Model::GetBonePosition(hModel_, "joint1");
             //a = XMFLOAT3(1, 1, 1);
             //pBall->HandPos(i,true);

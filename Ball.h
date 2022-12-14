@@ -69,6 +69,7 @@ class Ball : public GameObject
     Transform trans;
     //Fbx* pFbx;
 public:
+    int ballID;
     //コンストラクタ
     Ball(GameObject* parent);
 
@@ -99,5 +100,5 @@ public:
 
     void SetPower(float powerY, float powerZ, float rotatePlayer);
 
-    void SetPlayerModel(int model_);
+    void SetPlayerModel(int model_, int ballID_);
 };
