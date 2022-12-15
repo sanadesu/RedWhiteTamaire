@@ -1,11 +1,7 @@
 #include "PlayScene.h"
-#include"Player1.h"
-#include"Player2.h"
 #include"Player.h"
 #include"Ground.h"
 #include "Basket.h"
-#include "WhiteBall.h"
-#include "RedBall.h"
 #include "Ball.h"
 #include "Engine/Image.h"
 #include "Engine/Input.h"
@@ -21,8 +17,8 @@ PlayScene::PlayScene(GameObject* parent)
 void PlayScene::Initialize()
 {
 	Instantiate<Ground>(this);
-	Instantiate<Player1>(this);
-	Instantiate<Player2>(this);
+	/*Instantiate<Player1>(this);
+	Instantiate<Player2>(this);*/
 	Instantiate<Basket>(this);
 	Ball* pBall[80];
 	for (int i = 0; i < ALL_BALL; i++)
@@ -38,10 +34,10 @@ void PlayScene::Initialize()
 	Player* p2 = Instantiate<Player>(this);
 	p2->playerID = playerNumber;
 	//for (int i = 0; i < ALL_BALL; i++)
-	{
+	/*{
 		Instantiate<WhiteBall>(this);
 		Instantiate<RedBall>(this);
-	}
+	}*/
 	
 
 	pText = new Text;

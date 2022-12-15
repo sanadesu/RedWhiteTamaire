@@ -319,6 +319,7 @@ void Ball::Initialize()
         leftHaving = false;
         chargePower = false;
         assist = false;
+        isThrow = false;
     
 
     //モデルデータのロード
@@ -388,6 +389,7 @@ void Ball::Update()
         // バウンドの判定
         if (transform_.position_.y <= 0.0f)
         {  // ボールが下に当たったら
+            isThrow = false;
             transform_.position_.y = 0.0;
             powerY = -powerY * BOUND;  // y軸のスピードを反転して玉入れっぽくあまり跳ねなくする
             height = powerY; //高さ保存
@@ -783,6 +785,7 @@ void Ball::SetPower(float powerY_, float powerZ_, float playerRotateY_)
     powerZ = powerZ_;
     playerRotateY = playerRotateY_;
     throwBall = true;
+    isThrow = true;
 }
 
 void Ball::SetPlayerModel(int model_, int ballID_)
@@ -796,5 +799,10 @@ void Ball::SetPlayerModel(int model_, int ballID_)
 int Ball::GetBallNum()
 {
     return ballID;
+}
+
+bool Ball::GetIsThrow()
+{
+    return isThrow;
 }
 

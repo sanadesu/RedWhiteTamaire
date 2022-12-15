@@ -154,17 +154,30 @@ void Player::Update()
         }//移動
         if(playerID == i)
         {
-            XMFLOAT3 LeftSrick = Input::GetPadStickL(i);
-            LeftSrick.x /= 10;
-            LeftSrick.y /= 10;
-            transform_.position_.x += LeftSrick.x;
-            transform_.position_.z += LeftSrick.y;
+            XMFLOAT3 LeftStick = Input::GetPadStickL(i);
+            LeftStick.x /= 10;
+            LeftStick.y /= 10;
+            /*transform_.position_.x += LeftStick.x;
+            transform_.position_.z += LeftStick.y;*/
+
+            XMFLOAT3 move = { LeftStick.x,0,LeftStick.y }; //移動量
+            XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
+            XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));   //Y軸でｙ°回転させる行列
+
+            vMove = XMVector3TransformCoord(vMove, mRotate);	//ベクトルｖを行列ｍで変形
+            XMVECTOR vPos = XMLoadFloat3(&transform_.position_); //現在地をベクトルに変換
+
+            vPos += vMove; //現在の位置ベクトルに移動量ベクトルを足す
+
+            XMStoreFloat3(&transform_.position_, vPos);
 
             XMFLOAT3 RightSrick = Input::GetPadStickR(i);
-            RightSrick.x /= 10;
-            RightSrick.y /= 10;
+            //RightSrick.x /= 2;
+            RightSrick.y /= 4;
             transform_.rotate_.y += RightSrick.x;
             y_ += RightSrick.y;
+            //hdri
+            //ポリヘブン
         }
     }
 
@@ -299,14 +312,32 @@ void Player::OnCollision(GameObject* pTarget)
     for (int i = 0; i < Max; i++)
     {
         //ボールにあたる＆どのプレイヤーか＆ボール持ってないか
-        if (pTarget->GetObjectName() == "Ball" && playerID == i && leftHand < 0)
+        if (pTarget->GetObjectName() == "Ball" && playerID == i)
         {
+           
+
             //落ちてるボールか投げてるボールか転がってるボールか
             //↑ボールの状態取得して判別
             //ここには投げてるボールだけになる（あとで）
+            pBallThrow = (Ball*)pTarget;
+            if (pBallThrow->GetIsThrow() == true)
+            {
+                rightHand = -1;
+                leftHand = -1;
+                if (pBallRight != nullptr)
+                {
+                    pBallRight->KillMe();
+                    pBallRight = nullptr;
+                }
+                if (pBallLeft != nullptr)
+                {
+                    pBallLeft->KillMe();
+                    pBallLeft = nullptr;
+                }
+               
 
-            //みぎてあいてる
-            if (rightHand < 0)
+            } //みぎてあいてる
+            else if (rightHand < 0)
             {
                 //落ちてるボール
                 //processID = i;
@@ -323,7 +354,7 @@ void Player::OnCollision(GameObject* pTarget)
                 //pBall->HandPos(i,true);
                 //pBall->PlayerBone(a);
             }//左手
-            else
+            else if(leftHand < 0)
             {
                 pBallLeft = (Ball*)pTarget;
                 leftHand = pBallLeft->GetBallNum();

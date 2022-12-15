@@ -1,6 +1,5 @@
 #pragma once
 #include "Engine/GameObject.h"
-#include "WhiteBall.h"
 #include "Engine/Text.h"
 
 //■■シーンを管理するクラス

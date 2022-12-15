@@ -3,14 +3,16 @@ class StateBase
 {
 public:
 	//static StandingState standing;
-	virtual ~StateBase() {};
-	virtual void Update() {};
+	//virtual ~StateBase() {};
+	//virtual void Update() {};
 	//------------------------歩く------------------------
 	//敵が見えていてボールを1個持ってたら→近いボールまで
 	//違ったら自分のボールまで
-	virtual void Action();
 
-	virtual void NextState(StateBase* state_);
+
+	virtual void Action() = 0;
+
+	virtual void NextState(StateBase* state_) = 0;
 
 
 	//------------------------拾う------------------------

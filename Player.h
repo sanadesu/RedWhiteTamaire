@@ -1,7 +1,6 @@
 #pragma once
 #include "Engine/GameObject.h"
 #include "PoryLine.h"
-#include "WhiteBall.h"
 #include "Ball.h"
 #include "Basket.h"
 
@@ -52,6 +51,7 @@ class Player : public GameObject
     Ball* pBall = (Ball*)FindObject("Ball");
     Ball* pBallRight = nullptr;
     Ball* pBallLeft = nullptr;
+    Ball* pBallThrow = nullptr;
     Basket* pBasket = (Basket*)FindObject("Basket");
 public:
     int playerID;

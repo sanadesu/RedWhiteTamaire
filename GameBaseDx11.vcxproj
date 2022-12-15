@@ -131,13 +131,11 @@
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Basket.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Player2.cpp" />
     <ClCompile Include="PoryLine.cpp" />
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="Engine\Text.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Log.cpp" />
-    <ClCompile Include="Player1.cpp" />
     <ClCompile Include="Engine\Audio.cpp" />
     <ClCompile Include="Engine\BoxCollider.cpp" />
     <ClCompile Include="Engine\Camera.cpp" />
@@ -158,23 +156,21 @@
     <ClCompile Include="Engine\Texture.cpp" />
     <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="PlayScene.cpp" />
-    <ClCompile Include="RedBall.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateBase.cpp" />
+    <ClCompile Include="StateThrow.cpp" />
+    <ClCompile Include="StateWalk.cpp" />
     <ClCompile Include="TitleScene.cpp" />
-    <ClCompile Include="WhiteBall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Basket.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Player2.h" />
     <ClInclude Include="PoryLine.h" />
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="Engine\Text.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Log.h" />
-    <ClInclude Include="Player1.h" />
     <ClInclude Include="Engine\Audio.h" />
     <ClInclude Include="Engine\BoxCollider.h" />
     <ClInclude Include="Engine\Camera.h" />
@@ -195,11 +191,11 @@
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="PlayScene.h" />
-    <ClInclude Include="RedBall.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateBase.h" />
+    <ClInclude Include="StateThrow.h" />
+    <ClInclude Include="StateWalk.h" />
     <ClInclude Include="TitleScene.h" />
-    <ClInclude Include="WhiteBall.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

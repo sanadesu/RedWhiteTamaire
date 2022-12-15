@@ -3,8 +3,6 @@
 #include "Engine/SphereCollider.h"
 #include "Engine/Fbx.h"
 #include "Ball.h"
-#include "Player1.h"
-#include "Player2.h"
 #include "Basket.h"
 #include "PoryLine.h"
 
@@ -59,10 +57,10 @@ class Ball : public GameObject
     bool leftHaving;    //ç∂éË
     bool chargePower;   //óÕÇÇΩÇﬂÇƒÇ¢ÇÈÇ©
     bool assist;
+    bool isThrow;
     //XMFLOAT direction;
 
-    Player1* pPlayer1 = (Player1*)FindObject("Player1");
-    Player2* pPlayer2 = (Player2*)FindObject("Player2");
+   
     //Player* pPlayer = (Player*)FindObject("Player");
     Basket* pBasket = (Basket*)FindObject("Basket");
     GameObject* pBall = FindObject("Ball");
@@ -104,4 +102,6 @@ public:
     void SetPlayerModel(int model_, int ballID_);
 
     int GetBallNum();
+
+    bool GetIsThrow();
 };
