@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "Direct3D.h"
 #include "Text.h"
+#include"GameObject.h"
 
 Text::Text() : hPict_(-1), width_(16), height_(32), fileName_("char.jpg"), rowLength_(16)
 {

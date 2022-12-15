@@ -137,7 +137,6 @@
     <ClCompile Include="Engine\Text.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Log.cpp" />
-    <ClCompile Include="memo.cpp" />
     <ClCompile Include="Player1.cpp" />
     <ClCompile Include="Engine\Audio.cpp" />
     <ClCompile Include="Engine\BoxCollider.cpp" />

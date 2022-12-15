@@ -11,7 +11,7 @@
 //◆◆◆を管理するクラス
 class Ball : public GameObject
 {
-    int hModel_;    //モデル番号
+    int hModel_[2];    //モデル番号
 
     enum Player
     {
@@ -27,6 +27,7 @@ class Ball : public GameObject
         static const int NEAR_GOAL;
     };*/
 
+    const int MODEL_NUM = 2;
     const int DIAMETER = 3800;
     const int HALF = 2;
     const int CHANGE_DECIMAL = 100;

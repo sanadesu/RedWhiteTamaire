@@ -158,18 +158,18 @@ void Player1::Update()
     }
     
 
-    //カメラ
-    XMVECTOR vCam = XMVectorSet(0.0f, y_, -CAMERA_Z, 0.0f);
-    XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
+    ////カメラ
+    //XMVECTOR vCam = XMVectorSet(0.0f, y_, -CAMERA_Z, 0.0f);
+    //XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
 
-    vCam = XMVector3TransformCoord(vCam, mRotate);
-    XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
-    XMFLOAT3 camPos;
-    XMStoreFloat3(&camPos, vPos + vCam);//カメラの座標
+    //vCam = XMVector3TransformCoord(vCam, mRotate);
+    //XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
+    //XMFLOAT3 camPos;
+    //XMStoreFloat3(&camPos, vPos + vCam);//カメラの座標
 
-    Direct3D::SetViewPort(0);
-    Camera::SetPosition(camPos);
-    Camera::SetTarget(transform_.position_);
+    //Direct3D::SetViewPort(0);
+    //Camera::SetPosition(camPos);
+    //Camera::SetTarget(transform_.position_);
 
 
 

@@ -6,7 +6,7 @@
 //■■シーンを管理するクラス
 class PlayScene : public GameObject
 {
-	const int ALL_BALL = 30;
+	const int ALL_BALL = 80;
 	const int END_TIME = 7200;
 	int time;
 	Text* pText;

@@ -3,6 +3,7 @@
 #include "PoryLine.h"
 #include "WhiteBall.h"
 #include "Ball.h"
+#include "Basket.h"
 
 //ŸŸŸ‚ğŠÇ—‚·‚éƒNƒ‰ƒX
 class Player : public GameObject
@@ -49,6 +50,9 @@ class Player : public GameObject
     PoryLine* pLine;
     Transform trans;
     Ball* pBall = (Ball*)FindObject("Ball");
+    Ball* pBallRight = nullptr;
+    Ball* pBallLeft = nullptr;
+    Basket* pBasket = (Basket*)FindObject("Basket");
 public:
     int playerID;
 

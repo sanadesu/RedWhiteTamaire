@@ -86,7 +86,6 @@
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Player1.cpp" />
     <ClCompile Include="ResultScene.cpp" />
-    <ClCompile Include="memo.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Basket.cpp" />

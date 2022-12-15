@@ -23,23 +23,24 @@ void PlayScene::Initialize()
 	Instantiate<Ground>(this);
 	Instantiate<Player1>(this);
 	Instantiate<Player2>(this);
-	Ball* pBall[40];
+	Instantiate<Basket>(this);
+	Ball* pBall[80];
 	for (int i = 0; i < ALL_BALL; i++)
 	{
 		pBall[i] = Instantiate<Ball>(this);
 		pBall[i]->ballID = i;
 
-		Instantiate<RedBall>(this);
+		
 	}
 	Player* p1 = Instantiate<Player>(this);
 	p1->playerID = playerNumber;
 	playerNumber++;
 	Player* p2 = Instantiate<Player>(this);
 	p2->playerID = playerNumber;
-	Instantiate<Basket>(this);
 	//for (int i = 0; i < ALL_BALL; i++)
 	{
 		Instantiate<WhiteBall>(this);
+		Instantiate<RedBall>(this);
 	}
 	
 

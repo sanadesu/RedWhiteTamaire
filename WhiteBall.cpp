@@ -416,7 +416,7 @@ void WhiteBall::OnCollision(GameObject* pTarget)
     if (pTarget->GetObjectName() == "Basket")
     {
         //ƒS[ƒ‹‚É“ü‚Á‚½‚ç“¾“_{Á‚¦‚é
-        pBasket->WhiteCount();
+        //pBasket->WhiteCount();
         KillMe();
         
         //ƒS[ƒ‹‚¶‚á‚È‚©‚Á‚½‚ç—‚¿‚é

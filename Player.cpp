@@ -57,6 +57,15 @@ void Player::Initialize()
 //更新
 void Player::Update()
 {
+    if (pBallRight != nullptr)
+    {
+        pBallRight->PlayerBone(Model::GetBonePosition(hModel_, "joint1"));
+    }
+    if (pBallLeft != nullptr)
+    {
+        pBallLeft->PlayerBone(Model::GetBonePosition(hModel_, "joint2"));
+    }
+
     moveLimit = (transform_.position_.x * transform_.position_.x) + (transform_.position_.z * transform_.position_.z);
     if (moveLimit > CIRCLE_RANGE)
     {
@@ -124,13 +133,16 @@ void Player::Update()
         }
         else if (Input::IsPadButtonUp(XINPUT_GAMEPAD_A, i) && playerID == i && rightHand >= 0)
         {
-            if (rightHand == pBall->GetBallNum())
+            if (rightHand == pBallRight->GetBallNum())
             {
-                pBall->SetPower(powerY, powerZ, transform_.rotate_.y);
+                pBallRight->SetPower(powerY, powerZ, transform_.rotate_.y);
                 chargePower = false;
                 powerY = 0;
                 powerZ = 0;
-                rightHand = -1;
+                rightHand = leftHand;
+                leftHand = -1;
+                pBallRight = pBallLeft;
+                pBallLeft = nullptr;
             }
             
         }
@@ -142,11 +154,17 @@ void Player::Update()
         }//移動
         if(playerID == i)
         {
-            XMFLOAT3 a = Input::GetPadStickL(i);
-            a.x /= 10;
-            a.y /= 10;
-            transform_.position_.x += a.x;
-            transform_.position_.z += a.y;
+            XMFLOAT3 LeftSrick = Input::GetPadStickL(i);
+            LeftSrick.x /= 10;
+            LeftSrick.y /= 10;
+            transform_.position_.x += LeftSrick.x;
+            transform_.position_.z += LeftSrick.y;
+
+            XMFLOAT3 RightSrick = Input::GetPadStickR(i);
+            RightSrick.x /= 10;
+            RightSrick.y /= 10;
+            transform_.rotate_.y += RightSrick.x;
+            y_ += RightSrick.y;
         }
     }
 
@@ -236,17 +254,17 @@ void Player::Update()
     //}
 
 
-    ////カメラ
-    //XMVECTOR vCam = XMVectorSet(0.0f, y_, -CAMERA_Z, 0.0f);
-    //XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
+    //カメラ
+    XMVECTOR vCam = XMVectorSet(0.0f, y_, -CAMERA_Z, 0.0f);
+    XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
 
-    //vCam = XMVector3TransformCoord(vCam, mRotate);
-    //XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
-    //XMFLOAT3 camPos;
-    //XMStoreFloat3(&camPos, vPos + vCam);//カメラの座標
+    vCam = XMVector3TransformCoord(vCam, mRotate);
+    XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
+    XMFLOAT3 camPos;
+    XMStoreFloat3(&camPos, vPos + vCam);//カメラの座標
 
-    //Camera::SetPosition(camPos);
-    //Camera::SetTarget(transform_.position_);
+    Camera::SetPosition(camPos);
+    Camera::SetTarget(transform_.position_);
 
     //デバッグ用
     if (Input::IsKeyDown(DIK_B))
@@ -293,9 +311,11 @@ void Player::OnCollision(GameObject* pTarget)
                 //落ちてるボール
                 //processID = i;
                 //pWhiteBall->
-                pTarget->SetPosition(Model::GetBonePosition(hModel_, "joint1"));
-                //当たったボールの番号知りたいむり
-                rightHand = pBall->GetBallNum();
+                pBallRight = (Ball*)pTarget;
+                //pBall->SetPosition(Model::GetBonePosition(hModel_, "joint1"));
+                //pBallRight->PlayerBone(Model::GetBonePosition(hModel_, "joint1"));
+                //当たったボールの番号知りたい
+                rightHand = pBallRight->GetBallNum();
                 
                 //pBall->SetPlayerModel(hModel_);
                 //XMFLOAT3 a = Model::GetBonePosition(hModel_, "joint1");
@@ -305,7 +325,8 @@ void Player::OnCollision(GameObject* pTarget)
             }//左手
             else
             {
-                leftHand = pBall->ballID;
+                pBallLeft = (Ball*)pTarget;
+                leftHand = pBallLeft->GetBallNum();
             }
            
 
@@ -322,19 +343,6 @@ float Player::GetAngle()
 {
     return 0;
 }
-
-////ボールを持つ
-//void Player::SetHand(bool rightHand_, bool leftHand_)
-//{
-//    rightHand = rightHand_;
-//    leftHand = leftHand_;
-//}
-//
-////ボールを持っているか
-//std::pair<bool, bool> Player::GetHand()
-//{
-//    return std::make_pair(rightHand, leftHand);
-//}
 
 void Player::SetDamage(bool damage_)
 {

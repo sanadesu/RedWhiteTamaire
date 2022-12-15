@@ -287,7 +287,11 @@
 Ball::Ball(GameObject* parent)
     :GameObject(parent, "Ball")
 {
-    hModel_ = -1;
+    for(int i:hModel_)
+    {
+
+        hModel_[i] = -1;
+    }
     ballID = 0;
 }
 
@@ -318,8 +322,20 @@ void Ball::Initialize()
     
 
     //モデルデータのロード
-    hModel_ = Model::Load("WhiteBall.fbx");
-    assert(hModel_ >= 0);
+    /*hModel_ = Model::Load("WhiteBall.fbx");
+    assert(hModel_ >= 0);*/
+
+
+    std::string fileName[] = { "WhiteBall.fbx","RedBall.fbx" };
+    //モデルデータのロード
+    for (int i = 0; i < 2; i++)
+    {
+        std::string fn = fileName[i];
+        hModel_[i] = Model::Load(fn);
+        assert(hModel_[i] >= 0);
+    }
+
+
 
     do
     {
@@ -694,8 +710,18 @@ void Ball::Update()
 //描画
 void Ball::Draw()
 {
-    Model::SetTransform(hModel_, transform_);
-    Model::Draw(hModel_);
+    if (ballID < 40)
+    {
+        Model::SetTransform(hModel_[0], transform_);
+        Model::Draw(hModel_[0]);
+    }
+    else
+    {
+        Model::SetTransform(hModel_[1], transform_);
+        Model::Draw(hModel_[1]);
+    }
+    
+   
 
     
 
@@ -713,9 +739,20 @@ void Ball::OnCollision(GameObject* pTarget)
     //弾に当たったとき
     if (pTarget->GetObjectName() == "Basket")
     {
-        //ゴールに入ったら得点＋消える
-        pBasket->WhiteCount();
-        KillMe();
+        hModel_[0];
+        this->hModel_;
+
+        if (ballID < 40)
+        {
+            //ゴールに入ったら得点＋消える
+            pBasket->WhiteCount();
+            KillMe();
+        }
+        else
+        {
+            pBasket->RedCount();
+            KillMe();
+        }
 
         //ゴールじゃなかったら落ちる
 
@@ -737,7 +774,7 @@ void Ball::HandPos(int playerID_, bool rightHand_)
 void Ball::PlayerBone(XMFLOAT3 bone)
 {
     //わからん
-    //transform_.position_ = bone;
+    transform_.position_ = bone;
 }
 
 void Ball::SetPower(float powerY_, float powerZ_, float playerRotateY_)
