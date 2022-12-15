@@ -3,6 +3,7 @@
 #include "PoryLine.h"
 #include "Ball.h"
 #include "Basket.h"
+#include "StateWalk.h"
 
 //◆◆◆を管理するクラス
 class Player : public GameObject
@@ -11,11 +12,19 @@ class Player : public GameObject
 
     enum PlayerNumber
     {
-        First,
-        Second,
-        Third,
-        Fourth,
-        Max
+        FIRST,
+        SECOND,
+        THIRD,
+        FOURTH,
+        MAX
+    };
+
+    enum State
+    {
+        WALK_STATE = 0,
+        CHARGE_STATE,
+        THROW_STATE,
+
     };
 
     const int CIRCLE_RANGE = 360;//丸の範囲？？？？
@@ -30,6 +39,7 @@ class Player : public GameObject
     const float GRAVITY = 0.05f;
     const float RESISTANCE = 0.97f;
 
+    int nowState;
     int key;
     int button;
     int processID;
@@ -46,13 +56,14 @@ class Player : public GameObject
     bool damage;            //攻撃を受けたか
     bool chargePower;
 
-    PoryLine* pLine;
     Transform trans;
+    PoryLine* pLine;
     Ball* pBall = (Ball*)FindObject("Ball");
     Ball* pBallRight = nullptr;
     Ball* pBallLeft = nullptr;
     Ball* pBallThrow = nullptr;
     Basket* pBasket = (Basket*)FindObject("Basket");
+    StateWalk* pStateWalk = (StateWalk*)FindObject("StateWalk");
 public:
     int playerID;
 

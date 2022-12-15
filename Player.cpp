@@ -32,6 +32,7 @@ void Player::Initialize()
     SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 1, 0), HIT_SIZE);
     AddCollider(collision);
 
+    nowState = WALK_STATE;
     playerID = 0;
     key = 0;
     processID = 0;
@@ -57,6 +58,85 @@ void Player::Initialize()
 //更新
 void Player::Update()
 {
+    switch (nowState)
+    {
+    case WALK_STATE:
+
+        transform_.rotate_.y += 0.5f;
+        transform_.position_.z += 0.1f;
+
+        XMFLOAT3 move = { 0,0,trajectoryZ }; //移動量
+        XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
+        XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));   //Y軸でｙ°回転させる行列
+
+        vMove = XMVector3TransformCoord(vMove, mRotate);	//ベクトルｖを行列ｍで変形
+        XMVECTOR vPos = XMLoadFloat3(&transform_.position_); //現在地をベクトルに変換
+
+        vPos += vMove; //現在の位置ベクトルに移動量ベクトルを足す
+
+        XMStoreFloat3(&transform_.position_, vPos);
+
+        if (pBallRight != nullptr)
+        {
+            nowState = CHARGE_STATE;
+        }
+        break;
+    case CHARGE_STATE:
+        //力ためるやつ
+        powerY -= POWER;
+        powerZ += POWER;
+        trajectoryY = powerY;
+        trajectoryZ = powerZ;
+        //右手の位置
+        trans.position_ = Model::GetBonePosition(hModel_, "joint1");
+        //trans.position_ = transform_.position_;
+
+        for (int j = 0; j < 30; j++)
+        {
+            // 加速度の演算
+            trajectoryY += GRAVITY;
+
+
+            trans.rotate_ = transform_.rotate_;
+            XMFLOAT3 move = { 0,-trajectoryY,trajectoryZ }; //移動量
+            XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
+            XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(trans.rotate_.y));   //Y軸でｙ°回転させる行列
+
+            vMove = XMVector3TransformCoord(vMove, mRotate);	//ベクトルｖを行列ｍで変形
+            XMVECTOR vPos = XMLoadFloat3(&trans.position_); //現在地をベクトルに変換
+
+            vPos += vMove; //現在の位置ベクトルに移動量ベクトルを足す
+
+            XMStoreFloat3(&trans.position_, vPos);
+
+            pLine->AddPosition(trans.position_);
+            trajectoryZ *= RESISTANCE;//抵抗
+        }
+        chargePower = true;
+        if (powerZ > 0.5)
+        {
+            nowState = THROW_STATE;
+        }
+        break;
+    case THROW_STATE:
+        if (rightHand == pBallRight->GetBallNum())
+        {
+            pBallRight->SetPower(powerY, powerZ, transform_.rotate_.y);
+            chargePower = false;
+            powerY = 0;
+            powerZ = 0;
+            rightHand = leftHand;
+            leftHand = -1;
+            pBallRight = pBallLeft;
+            pBallLeft = nullptr;
+            nowState = WALK_STATE;
+        }
+        break;
+    default:
+        break;
+    }
+
+
     if (pBallRight != nullptr)
     {
         pBallRight->PlayerBone(Model::GetBonePosition(hModel_, "joint1"));
@@ -90,7 +170,7 @@ void Player::Update()
     }
 
 
-    for (int i = 0; i < Max; i++)
+    for (int i = 0; i < MAX; i++)
     {
         //XMFLOAT3
         //なげる
@@ -309,7 +389,7 @@ void Player::Release()
 //何かに当たった
 void Player::OnCollision(GameObject* pTarget)
 {
-    for (int i = 0; i < Max; i++)
+    for (int i = 0; i < MAX; i++)
     {
         //ボールにあたる＆どのプレイヤーか＆ボール持ってないか
         if (pTarget->GetObjectName() == "Ball" && playerID == i)
