@@ -1,4 +1,6 @@
 #pragma once
+#include "Engine/Direct3D.h"
+
 class StateBase
 {
 public:
@@ -12,9 +14,9 @@ public:
 
 	virtual void Action() = 0;
 
-	virtual void NextState(StateBase* state_) = 0;
+	virtual StateBase* NextState() = 0;
 
-
+	XMFLOAT3 pos;
 	//------------------------拾う------------------------
 	//見えてる敵が1個ボール持ってない時→もう一個自分ボール拾いに行ったり行かなかったり
 
