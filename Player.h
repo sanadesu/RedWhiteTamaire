@@ -32,7 +32,6 @@ class Player : public GameObject
     const float START_POS_X = 0.0f;
     const float START_POS_Z = -3.0f;
     const float HIT_SIZE = 1.2f;
-    const float RETURN_MOVE = 0.01f;
     const float PLAYER_MOVE = 0.1f;//移動距離
     const float CAMERA_Z = 20.0f; //Z座標
     const float HAND_HEIGHT = 2.5f;
@@ -55,6 +54,7 @@ class Player : public GameObject
     //bool leftHand;          //左手
     bool damage;            //攻撃を受けたか
     bool chargePower;
+    Transform prevPos; //1フレーム前の場所
 
     Transform trans;
     PoryLine* pLine;
