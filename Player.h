@@ -50,6 +50,7 @@ class Player : public GameObject
     float trajectoryZ;
     float y_;               //YÀ•W
     float moveLimit;        //ˆÚ“®”ÍˆÍ
+    float goalLength;
     //bool rightHand;         //‰Eè
     //bool leftHand;          //¶è
     bool damage;            //UŒ‚‚ğó‚¯‚½‚©

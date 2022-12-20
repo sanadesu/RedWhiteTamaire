@@ -44,6 +44,7 @@ void Player::Initialize()
     trajectoryZ = 0.0f;
     y_ = 10.0f; //YÀ•W
     moveLimit = 0.0f;
+    goalLength = 0.0f;
    /* rightHand = false;
     leftHand = false;*/
     damage = false;
@@ -85,6 +86,21 @@ void Player::Update()
             }
             break;
         case CHARGE_STATE:
+            XMFLOAT3 origine = XMFLOAT3(0,0,0);
+            XMVECTOR vOrigin = XMLoadFloat3(&origine);
+            XMFLOAT3 HandPos = Model::GetBonePosition(hModel_, "joint1");
+            XMVECTOR vPlayerPos = XMLoadFloat3(&HandPos);
+            XMVECTOR vGoal = vOrigin - vPlayerPos; //ƒS[ƒ‹‚Ö‚ÌŒü‚«
+
+            XMVECTOR vGoalLength = XMVector3Length(vGoal);
+            goalLength = XMVectorGetX(vGoalLength);
+
+            XMFLOAT3 vGoalRotate; 	
+
+            XMStoreFloat3(&vGoalRotate, vGoal);
+
+            transform_.rotate_.y = atan2(vGoalRotate.x, vGoalRotate.z) * 180.0 / 3.14;
+
             //—Í‚½‚ß‚é‚â‚Â
             powerY -= POWER;
             powerZ += POWER;
@@ -98,7 +114,6 @@ void Player::Update()
             {
                 // ‰Á‘¬“x‚Ì‰‰ŽZ
                 trajectoryY += GRAVITY;
-
 
                 trans.rotate_ = transform_.rotate_;
                 XMFLOAT3 move = { 0,-trajectoryY,trajectoryZ }; //ˆÚ“®—Ê
@@ -116,7 +131,7 @@ void Player::Update()
                 trajectoryZ *= RESISTANCE;//’ïR
             }
             chargePower = true;
-            if (powerZ > 0.5)
+            if (powerZ > powf(goalLength,0.5) * ((rand() % 30 / 1000) + 0.20))
             {
                 nowState = THROW_STATE;
             }
