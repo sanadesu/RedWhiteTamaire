@@ -6,6 +6,7 @@
 
 Fbx::Fbx():_animSpeed(0)
 {
+	
 }
 
 

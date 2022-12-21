@@ -10,11 +10,11 @@ class FbxParts;
 //レイキャスト用構造体
 struct RayCastData
 {
-	XMFLOAT3	start;	//レイ発射位置
-	XMFLOAT3	dir;	//レイの向きベクトル
-	float       dist;	//衝突点までの距離
-	BOOL        hit;	//レイが当たったか
-	XMFLOAT3 normal;	//法線
+	XMFLOAT3	start = XMFLOAT3(0,0,0);	//レイ発射位置
+	XMFLOAT3	dir = XMFLOAT3(0, 0, 0);	//レイの向きベクトル
+	float       dist = 0.0f;	//衝突点までの距離
+	BOOL        hit = false;	//レイが当たったか
+	XMFLOAT3 normal = XMFLOAT3(0, 0, 0);	//法線
 
 	RayCastData() { dist = 99999.0f; }
 };

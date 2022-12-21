@@ -44,10 +44,10 @@ class Ball : public GameObject
     const float END_MOVE = 0.001f;
 
     int key;
-    int radius;         //‰~‚Ì”¼Œa‚Ì2æ
     int ballDrop;
     int assistKey;
     int playerModel = 0;
+    float radius;         //‰~‚Ì”¼Œa‚Ì2æ
     float height;       //ƒoƒEƒ“ƒh‚Ì‚‚³
     float powerZ;       //“Š‚°‚é‹——£
     float powerY;       //“Š‚°‚é‚‚³

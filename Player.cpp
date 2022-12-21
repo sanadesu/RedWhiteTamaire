@@ -27,7 +27,7 @@ void Player::Initialize()
 
     //trans.position_ = XMFLOAT3(0, 0, -3);
     transform_.position_ = XMFLOAT3(START_POS_X, 0, START_POS_Z);
-    transform_.position_.x = rand() % 20;
+    transform_.position_.x = (float)(rand() % 200 /10);
     //当たり判定
     SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 1, 0), HIT_SIZE);
     AddCollider(collision);
@@ -35,6 +35,7 @@ void Player::Initialize()
     nowState = WALK_STATE;
     playerID = 0;
     key = 0;
+    button = 0;
     processID = 0;
     rightHand = -1;
     leftHand = -1;
@@ -45,8 +46,6 @@ void Player::Initialize()
     y_ = 10.0f; //Y座標
     moveLimit = 0.0f;
     goalLength = 0.0f;
-   /* rightHand = false;
-    leftHand = false;*/
     damage = false;
     chargePower = false;
     prevPos = transform_;
@@ -67,7 +66,6 @@ void Player::Update()
         case WALK_STATE:
             if (moveLimit > CIRCLE_RANGE)
             transform_.rotate_.y += 137;
-
 
             XMFLOAT3 move = { 0,0,PLAYER_MOVE }; //移動量
             XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
@@ -99,7 +97,7 @@ void Player::Update()
 
             XMStoreFloat3(&vGoalRotate, vGoal);
 
-            transform_.rotate_.y = atan2(vGoalRotate.x, vGoalRotate.z) * 180.0 / 3.14;
+            transform_.rotate_.y = (float)(atan2(vGoalRotate.x, vGoalRotate.z) * 180.0 / 3.14);
 
             //力ためるやつ
             powerY -= POWER;
@@ -214,7 +212,6 @@ void Player::Update()
             {
                 // 加速度の演算
                 trajectoryY += GRAVITY;
-
 
                 trans.rotate_ = transform_.rotate_;
                 XMFLOAT3 move = { 0,-trajectoryY,trajectoryZ }; //移動量

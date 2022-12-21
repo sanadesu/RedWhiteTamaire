@@ -336,8 +336,6 @@ void Ball::Initialize()
         assert(hModel_[i] >= 0);
     }
 
-
-
     do
     {
         transform_.position_.x = (float)(rand() % DIAMETER - (DIAMETER / HALF)) / CHANGE_DECIMAL;
@@ -349,8 +347,6 @@ void Ball::Initialize()
     //“–‚½‚è”»’è
     SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 0, 0), BALLSIZE);
     AddCollider(collision);
-
-   
 
     trans.position_ = XMFLOAT3(0, 0, 0);
 }
