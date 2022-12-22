@@ -7,7 +7,7 @@
 
 PoryLine::PoryLine() :
 	WIDTH_(0.1f),	//太さ
-	LENGTH_(30),	//長さ（あくまで位置を記憶する数で、実際の長さは移動速度によって変わる）
+	LENGTH_(15),	//長さ（あくまで位置を記憶する数で、実際の長さは移動速度によって変わる）
 
 	pVertexBuffer_(nullptr), pConstantBuffer_(nullptr), pTexture_(nullptr)
 {

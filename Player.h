@@ -8,8 +8,7 @@
 //◆◆◆を管理するクラス
 class Player : public GameObject
 {
-    int hModel_;    //モデル番号
-
+    
     enum PlayerNumber
     {
         FIRST,
@@ -24,10 +23,14 @@ class Player : public GameObject
         WALK_STATE = 0,
         CHARGE_STATE,
         THROW_STATE,
-
+        MAX_STATE
     };
 
+    int hModel_;    //モデル番号
+    int hPict_;    //画像番号
+
     const int CIRCLE_RANGE = 360;//丸の範囲？？？？
+    const int PORY_LENGTH = 15;
     const float POWER = 0.01;
     const float START_POS_X = 0.0f;
     const float START_POS_Z = -3.0f;
@@ -37,6 +40,7 @@ class Player : public GameObject
     const float HAND_HEIGHT = 2.5f;
     const float GRAVITY = 0.05f;
     const float RESISTANCE = 0.97f;
+
 
     int nowState;
     int key;
@@ -107,4 +111,5 @@ public:
 
     Transform GetPlayerPosition(bool right_);
 
+    int GetState();
 };

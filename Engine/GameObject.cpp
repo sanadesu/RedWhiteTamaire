@@ -279,6 +279,23 @@ GameObject * GameObject::GetRootJob()
 	else return GetParent()->GetRootJob();
 }
 
+Transform GameObject::AngleChange(XMFLOAT3 moveSize_, float angle_, XMFLOAT3 nowPos_)
+{
+	XMFLOAT3 move = { moveSize_.x,moveSize_.y,moveSize_.z }; //移動量
+	XMVECTOR vMove = XMLoadFloat3(&move); //移動量をベクトルに変換 
+	XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(angle_));   //Y軸でｙ°回転させる行列
+
+	vMove = XMVector3TransformCoord(vMove, mRotate);	//ベクトルｖを行列ｍで変形
+	XMVECTOR vPos = XMLoadFloat3(&nowPos_); //現在地をベクトルに変換
+
+	vPos += vMove; //現在の位置ベクトルに移動量ベクトルを足す
+
+
+	XMStoreFloat3(&nowPos_, vPos);
+
+	return transform_;
+}
+
 
 
 

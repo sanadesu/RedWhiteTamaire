@@ -127,6 +127,8 @@ public:
 	//RootJobを取得
 	GameObject* GetRootJob();
 
+	//移動回転
+	Transform AngleChange(XMFLOAT3 moveSize_, float angle_, XMFLOAT3 nowPos_);
 
 	//各アクセス関数
 	XMFLOAT3 GetPosition() { return transform_.position_; }

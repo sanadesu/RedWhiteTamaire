@@ -4,11 +4,13 @@
 #include "Engine/Camera.h"
 #include"Ball.h"
 #include "Engine/SphereCollider.h"
+#include "Engine/Text.h"
+#include "Engine/Image.h"
 
 //コンストラクタ
 Player::Player(GameObject* parent)
     :GameObject(parent, "Player"),
-    hModel_(-1), pLine(nullptr)
+    hModel_(-1), hPict_(-1), pLine(nullptr)
 {
 
 }
@@ -24,6 +26,18 @@ void Player::Initialize()
 {
     hModel_ = Model::Load("Player.fbx");
     assert(hModel_ >= 0);
+
+    hPict_ = Image::Load("Walk.png");
+    assert(hPict_ >= 0);
+
+    //std::string fileName[] = { "Wald.png","Power.png","Throw.png"};
+    ////モデルデータのロード
+    //for (int i = 0; i < MAX_STATE; i++)
+    //{
+    //    std::string fn = fileName[i];
+    //    hPict_[i] = Model::Load(fn);
+    //    assert(hPict_[i] >= 0);
+    //}
 
     //trans.position_ = XMFLOAT3(0, 0, -3);
     transform_.position_ = XMFLOAT3(START_POS_X, 0, START_POS_Z);
@@ -61,9 +75,13 @@ void Player::Update()
 {
     if (playerID == 0)
     {
+        //ステートベースAI
         switch (nowState)
         {
-        case WALK_STATE:
+        case WALK_STATE://ボールを拾うまで歩く
+            hPict_ = Image::Load("Walk.png");
+            assert(hPict_ >= 0);
+
             if (moveLimit > CIRCLE_RANGE)
             transform_.rotate_.y += 137;
 
@@ -83,7 +101,10 @@ void Player::Update()
                 nowState = CHARGE_STATE;
             }
             break;
-        case CHARGE_STATE:
+        case CHARGE_STATE://投げるパワー決める
+            hPict_ = Image::Load("Power.png");
+            assert(hPict_ >= 0);
+
             XMFLOAT3 origine = XMFLOAT3(0,0,0);
             XMVECTOR vOrigin = XMLoadFloat3(&origine);
             XMFLOAT3 HandPos = Model::GetBonePosition(hModel_, "joint1");
@@ -108,7 +129,7 @@ void Player::Update()
             trans.position_ = Model::GetBonePosition(hModel_, "joint1");
             //trans.position_ = transform_.position_;
 
-            for (int j = 0; j < 30; j++)
+            for (int j = 0; j < PORY_LENGTH; j++)
             {
                 // 加速度の演算
                 trajectoryY += GRAVITY;
@@ -135,6 +156,9 @@ void Player::Update()
             }
             break;
         case THROW_STATE://ボール投げる
+            hPict_ = Image::Load("Throw.png");
+            assert(hPict_ >= 0);
+
             if (rightHand == pBallRight->GetBallNum())
             {
                 pBallRight->SetPower(powerY, powerZ, transform_.rotate_.y);
@@ -208,7 +232,7 @@ void Player::Update()
             trans.position_ = Model::GetBonePosition(hModel_, "joint1");
             //trans.position_ = transform_.position_;
 
-            for (int j = 0; j < 30; j++)
+            for (int j = 0; j < PORY_LENGTH; j++)
             {
                 // 加速度の演算
                 trajectoryY += GRAVITY;
@@ -392,6 +416,12 @@ void Player::Draw()
     Model::SetTransform(hModel_, transform_);
     Model::Draw(hModel_);
 
+    //if (hPict_ != nullptr)
+   /* {
+        Image::SetTransform(hPict_, transform_);
+        Image::Draw(hPict_);
+    }*/
+
     if (chargePower == true)
     {
         //ポリラインを描画
@@ -503,5 +533,10 @@ Transform Player::GetPlayerPosition(bool right)
     }
 
     return trans_;
+}
+
+int Player::GetState()
+{
+    return nowState;
 }
 
